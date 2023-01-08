@@ -23,7 +23,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "clients")
 public class Client {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clients_generator")
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clients_generator")
+    @GeneratedValue()
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

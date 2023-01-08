@@ -10,7 +10,8 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User {   
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
+    @GeneratedValue
     private int id;
     private String pseudo;
     private String password;
