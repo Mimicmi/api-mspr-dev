@@ -1,38 +1,100 @@
-.App {
-  text-align: center;
+.App-img1 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: block;
+
+}
+.firstst{
+  font-size: 40px;
+  color: #ffffff;
+  font-family: Ubuntu;
+  left: 30%;
+  right: 0;
+  top: 10%;
+  position: absolute;
+}
+.Titre{
+  font-size: 80px;
+  color: #ffffff;
+  font-family: Ubuntu;
+  left: 30%;
+  right: 0;
+  top: 13%;
+  position: absolute;
+  
+}
+.secondst{
+  font-size: 40px;
+  color: #ffffff;
+  font-family: Ubuntu;
+  left: 30%;
+  right: 0;
+  top: 35%;
+  position: absolute;
+}
+.ligne {
+  font-size: 20px;
+  color: #ffffff;
+  left: 5%;
+  right: 0;
+  top: 60%;
+  position: absolute;
+}
+.parag1{
+  font-size: 20px;
+  color: #ffffff;
+  color: #ffffff;
+  font-family:sans-serif;
+  left: 5%;
+  right: 0;
+  top: 65%;
+  position: absolute;
+}
+.parag2{
+  font-size: 20px;
+  color: #ffffff;
+ font-family: sans-serif;
+  left: 5%;
+  right: 0;
+  top: 70%;
+  position: absolute;
+}
+.parag3{
+  font-size: 20px;
+  color: #ffffff;
+ font-family: sans-serif;
+  left: 5%;
+  right: 0;
+  top: 75%;
+  position: absolute;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.icon1{
+  width: 30px;
+  height: 30px;
+  left: 5%;
+  right: 0;
+  top: 85%;
+  position: absolute;
+}
+.icon2{
+  width: 30px;
+  height: 30px;
+  left: 10%;
+  right: 0;
+  top: 85%;
+  position: absolute;
+}
+.icon3{
+  width: 30px;
+  height: 30px;
+  left: 15%;
+  right: 0;
+  top: 85%;
+  position: absolute;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ul{
+  display: inline-block;
 }
