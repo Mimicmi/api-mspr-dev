@@ -31,6 +31,8 @@ public class Advertisement {
     @JsonIgnore
     private Plant plant;
 
+    private float price;
+
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "schedule_in")
     private Date date_in;
@@ -45,12 +47,14 @@ public class Advertisement {
     @JsonIgnore
     private Client client;
 
+
     public Advertisement() {
     }
 
-    public Advertisement(int id, Plant plant, Date date_in, Date date_out, Client client) {
+    public Advertisement(int id, Plant plant, float price, Date date_in, Date date_out, Client client) {
         this.id = id;
         this.plant = plant;
+        this.price = price;
         this.date_in = date_in;
         this.date_out = date_out;
         this.client = client;
@@ -70,6 +74,14 @@ public class Advertisement {
 
     public void setPlant(Plant plant) {
         this.plant = plant;
+    }
+
+    public float getPrice() {
+        return this.price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public Date getDate_in() {
