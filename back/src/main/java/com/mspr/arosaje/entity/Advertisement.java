@@ -15,7 +15,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "advertisements")
@@ -28,7 +27,6 @@ public class Advertisement {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "plants_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Plant plant;
 
     private float price;
@@ -44,7 +42,6 @@ public class Advertisement {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "selected_keeper_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Client client;
 
 

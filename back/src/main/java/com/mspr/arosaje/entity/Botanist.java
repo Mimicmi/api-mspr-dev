@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "botanists")
@@ -23,7 +22,6 @@ public class Botanist {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Client client;
 
     private String siret;
