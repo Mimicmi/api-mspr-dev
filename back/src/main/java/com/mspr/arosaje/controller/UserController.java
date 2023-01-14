@@ -33,7 +33,7 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("user/{id}")
+    @GetMapping("users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
         Optional<User> userData = userRepository.findById(id);
 
@@ -47,5 +47,29 @@ public class UserController {
     public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
         userRepository.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping("users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") int id, @RequestBody User user) {
+        Optional<User> userData = userRepository.findById(id);
+
+        if (!userData.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        User _user = userData.get();
+        _user.setEmail(user.getEmail());
+        _user.setPassword(user.getPassword());
+        _user.setPseudo(user.getPseudo());
+        return new ResponseEntity<>(userRepository.save(_user), HttpStatus.OK);
+    }
+
+    @DeleteMapping("users/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") int id) {
+        try {
+            userRepository.deleteById(id);
+            return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
+        } catch (Exception err) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 }
