@@ -1,6 +1,6 @@
 package com.mspr.arosaje.entity;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +13,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -32,14 +32,14 @@ public class Maintenance {
 
     private String image;
     
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     @Column(name = "date_maintenance")
-    private Date date;
+    private LocalDateTime date;
 
     public Maintenance() {
     }
 
-    public Maintenance(int id, Advertisement advertisement, String image, Date date) {
+    public Maintenance(int id, Advertisement advertisement, String image, LocalDateTime date) {
         this.id = id;
         this.advertisement = advertisement;
         this.image = image;
@@ -70,11 +70,11 @@ public class Maintenance {
         this.image = image;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return this.date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
