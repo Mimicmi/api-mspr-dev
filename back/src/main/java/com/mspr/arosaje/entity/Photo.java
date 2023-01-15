@@ -1,6 +1,5 @@
 package com.mspr.arosaje.entity;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;

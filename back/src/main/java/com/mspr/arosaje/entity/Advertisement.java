@@ -1,6 +1,6 @@
 package com.mspr.arosaje.entity;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,13 +33,13 @@ public class Advertisement {
 
     private float price;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern="dd-MM-yyyy HH:mm:ss", timezone = "UTC")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     @Column(name = "schedule_in")
-    private Date date_in;
+    private LocalDateTime date_in;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="dd-MM-yyyy HH:mm:ss", timezone = "UTC")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     @Column(name = "schedule_out")
-    private Date date_out;
+    private LocalDateTime date_out;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "selected_keeper_id")
@@ -51,7 +51,7 @@ public class Advertisement {
     public Advertisement() {
     }
 
-    public Advertisement(int id, Plant plant, float price, Date date_in, Date date_out, Client client) {
+    public Advertisement(int id, Plant plant, float price, LocalDateTime date_in, LocalDateTime date_out, Client client) {
         this.id = id;
         this.plant = plant;
         this.price = price;
@@ -84,19 +84,19 @@ public class Advertisement {
         this.price = price;
     }
 
-    public Date getDate_in() {
+    public LocalDateTime getDate_in() {
         return this.date_in;
     }
 
-    public void setDate_in(Date date_in) {
+    public void setDate_in(LocalDateTime date_in) {
         this.date_in = date_in;
     }
 
-    public Date getDate_out() {
+    public LocalDateTime getDate_out() {
         return this.date_out;
     }
 
-    public void setDate_out(Date date_out) {
+    public void setDate_out(LocalDateTime date_out) {
         this.date_out = date_out;
     }
 
