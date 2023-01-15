@@ -15,6 +15,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "advertisements")
@@ -27,6 +28,7 @@ public class Advertisement {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "plants_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Plant plant;
 
     private float price;
