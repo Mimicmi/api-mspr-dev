@@ -74,7 +74,7 @@ public class BotanistController {
     public ResponseEntity<?> deleteBotanist(@PathVariable("id") int id) {
         try {
             botanistRepository.deleteById(id);
-            return new ResponseEntity<>("Client deleted successfully", HttpStatus.OK);
+            return new ResponseEntity<>("Botanist deleted successfully", HttpStatus.OK);
         } catch (Exception err) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
