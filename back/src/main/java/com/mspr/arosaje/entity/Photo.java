@@ -1,6 +1,7 @@
 package com.mspr.arosaje.entity;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -32,14 +33,14 @@ public class Photo {
 
     private String image;
     
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Column(name = "date_photo")
-    private Date date;
+    @Column(name = "date_photo", updatable = false)
+    @CreationTimestamp
+    private LocalDateTime date;
 
     public Photo() {
     }
 
-    public Photo(int id, Plant plant, String image, Date date) {
+    public Photo(int id, Plant plant, String image, LocalDateTime date) {
         this.id = id;
         this.plant = plant;
         this.image = image;
@@ -70,11 +71,11 @@ public class Photo {
         this.image = image;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return this.date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
