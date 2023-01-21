@@ -74,6 +74,8 @@ public class PlantController {
         _plant.setAddress(plant.getAddress());
         _plant.setProfil_photo(plant.getProfil_photo());
         _plant.setSpecie(plant.getSpecie());
+        _plant.setLatitude(plant.getLatitude());
+        _plant.setLongitude(plant.getLongitude());
         return new ResponseEntity<>(plantRepository.save(_plant), HttpStatus.OK);
     }
 

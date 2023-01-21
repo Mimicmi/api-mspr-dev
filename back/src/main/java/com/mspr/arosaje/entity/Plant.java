@@ -33,16 +33,20 @@ public class Plant {
     private Specie specie;
 
     private String address;
+    private double latitude;
+    private double longitude;
     private String profil_photo;
 
     public Plant() {
     }
 
-    public Plant(int id, Client client, Specie specie, String address, String profil_photo) {
+    public Plant(int id, Client client, Specie specie, String address, double latitude, double longitude, String profil_photo) {
         this.id = id;
         this.client = client;
         this.specie = specie;
         this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.profil_photo = profil_photo;
     }
 
@@ -76,6 +80,22 @@ public class Plant {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public double getLatitude() {
+        return this.latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return this.longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getProfil_photo() {
