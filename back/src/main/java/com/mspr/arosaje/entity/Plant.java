@@ -26,15 +26,22 @@ public class Plant {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Client client;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "specie_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Specie specie;
+
     private String address;
     private String profil_photo;
 
     public Plant() {
     }
 
-    public Plant(int id, Client client, String address, String profil_photo) {
+    public Plant(int id, Client client, Specie specie, String address, String profil_photo) {
         this.id = id;
         this.client = client;
+        this.specie = specie;
         this.address = address;
         this.profil_photo = profil_photo;
     }
@@ -53,6 +60,14 @@ public class Plant {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Specie getSpecie() {
+        return this.specie;
+    }
+
+    public void setSpecie(Specie specie) {
+        this.specie = specie;
     }
 
     public String getAddress() {

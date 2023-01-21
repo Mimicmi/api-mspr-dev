@@ -17,8 +17,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.mspr.arosaje.entity.Client;
 import com.mspr.arosaje.entity.Plant;
+import com.mspr.arosaje.entity.Specie;
 import com.mspr.arosaje.repository.ClientRepository;
 import com.mspr.arosaje.repository.PlantRepository;
+import com.mspr.arosaje.repository.SpecieRepository;
 
 @RestController
 public class PlantController {
@@ -28,6 +30,9 @@ public class PlantController {
 
     @Autowired
     PlantRepository plantRepository;
+
+    @Autowired
+    SpecieRepository specieRepository;
 
     @GetMapping("plants")
     public ResponseEntity<List<Plant>> getPlants() {
@@ -48,7 +53,8 @@ public class PlantController {
     @PostMapping("plants")
     public ResponseEntity<HttpStatus> createPlant(@RequestBody Plant plant) {
         Optional<Client> clientData = clientRepository.findById(plant.getClient().getId());
-        if (!clientData.isPresent()) {
+        Optional<Specie> specieData = specieRepository.findById(plant.getSpecie().getId());
+        if (!clientData.isPresent() && !specieData.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
             plantRepository.save(plant);
@@ -59,14 +65,15 @@ public class PlantController {
     @PutMapping("plants/{id}")
     public ResponseEntity<Plant> updatePlant(@PathVariable("id") int id, @RequestBody Plant plant) {
         Optional<Plant> plantData = plantRepository.findById(id);
-
-        if (!plantData.isPresent()) {
+        Optional<Specie> specieData = specieRepository.findById(plant.getSpecie().getId());
+        if (!plantData.isPresent() && !specieData.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         Plant _plant = plantData.get();
         _plant.setClient(plant.getClient());
         _plant.setAddress(plant.getAddress());
         _plant.setProfil_photo(plant.getProfil_photo());
+        _plant.setSpecie(plant.getSpecie());
         return new ResponseEntity<>(plantRepository.save(_plant), HttpStatus.OK);
     }
 

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.mspr.arosaje.entity.Plant;
 import com.mspr.arosaje.entity.Specie;
 import com.mspr.arosaje.repository.PlantRepository;
 import com.mspr.arosaje.repository.SpecieRepository;
@@ -47,13 +46,8 @@ public class SpecieController {
 
     @PostMapping("species")
     public ResponseEntity<HttpStatus> createSpecie(@RequestBody Specie specie) {
-        Optional<Plant> plantData = plantRepository.findById(specie.getPlant().getId());
-        if (!plantData.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        } else {
-            specieRepository.save(specie);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        }
+        specieRepository.save(specie);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("species/{id}")
@@ -64,7 +58,6 @@ public class SpecieController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         Specie _specie = specieData.get();
-        _specie.setPlant(specie.getPlant());
         _specie.setSpecie(specie.getSpecie());
         _specie.setDescription(specie.getDescription());
         _specie.setAdvice(specie.getAdvice());
