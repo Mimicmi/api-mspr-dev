@@ -36,6 +36,11 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    public User getUser(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.get();
+    }
+
     @GetMapping("users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
         Optional<User> userData = userRepository.findById(id);
