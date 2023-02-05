@@ -12,6 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 import com.mspr.arosaje.security.filter.AuthenticationFilter;
 import com.mspr.arosaje.security.manager.CustomAuthenticationManager;
+import com.mspr.arosaje.security.filter.ExceptionHandlerFilter;
+import com.mspr.arosaje.security.filter.JWTAuthorizationFilter;
 
 
 @Configuration
@@ -32,10 +34,11 @@ public class SecurityConfig {
             .authorizeRequests()
             //.antMatchers("/h2/**").permitAll() // New Line: allows us to access the h2 console without the need to authenticate. ' ** '  instead of ' * ' because multiple path levels will follow /h2.
             .antMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll()
-            //.antMatchers(HttpMethod.GET, SecurityConstants.REGISTER_PATH).permitAll()
             .anyRequest().authenticated()
             .and()
+            .addFilterBefore(new ExceptionHandlerFilter(), AuthenticationFilter.class)
             .addFilter(authenticationFilter)
+            .addFilterAfter(new JWTAuthorizationFilter(), AuthenticationFilter.class)
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         return http.build();
     }
