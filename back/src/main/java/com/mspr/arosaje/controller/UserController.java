@@ -21,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.mspr.arosaje.entity.User;
 import com.mspr.arosaje.repository.UserRepository;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class UserController {
 
@@ -50,7 +51,6 @@ public class UserController {
         return new ResponseEntity<>(userData.get(), HttpStatus.OK);
     }
 
-    @CrossOrigin
     @PostMapping("users")
     public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
