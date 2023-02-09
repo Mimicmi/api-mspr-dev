@@ -67,6 +67,8 @@ public class ClientController {
         _client.setUser(client.getUser());
         _client.setAddress(client.getAddress());
         _client.setUpdatedAt(client.getUpdatedAt());
+        _client.setLat(client.getLat());
+        _client.setLon(client.getLon());
         return new ResponseEntity<>(clientRepository.save(_client), HttpStatus.OK);
     }
 
