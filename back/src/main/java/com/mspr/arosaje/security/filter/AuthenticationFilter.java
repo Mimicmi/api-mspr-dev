@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.ServletException;
 
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -55,5 +56,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.TOKEN_EXPIRATION))
             .sign(Algorithm.HMAC512(SecurityConstants.SECRET_KEY));
         response.addHeader(SecurityConstants.AUTHORIZATION, SecurityConstants.BEARER + token);
+        Cookie tokenCookie = new Cookie("userToken", token);
+        response.addCookie(tokenCookie);
     }
 }
