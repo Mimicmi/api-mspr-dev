@@ -32,3 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 spring-boot-bootcamp-resources-main/
+
+### Application Properties ###
+src/main/resources/application.properties

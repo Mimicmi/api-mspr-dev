@@ -26,7 +26,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         AuthenticationFilter authenticationFilter = new AuthenticationFilter(customAuthenticationManager);
         authenticationFilter.setFilterProcessesUrl("/authenticate");
-        http 
+        http        
+            .cors().and()
             .csrf().disable()
             .authorizeRequests()
             .antMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll()
