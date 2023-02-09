@@ -40,16 +40,21 @@ public class Client {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    private Double lon;
+
+    private Double lat;
 
     public Client() {
     }
 
-    public Client(int id, User user, String address, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Client(int id, User user, String address, LocalDateTime createdAt, LocalDateTime updatedAt, Double lon, Double lat) {
         this.id = id;
         this.user = user;
         this.address = address;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.lon = lon;
+        this.lat = lat;
     }
 
     public int getId() {
@@ -90,5 +95,21 @@ public class Client {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Double getLon() {
+        return this.lon;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
+    }
+
+    public Double getLat() {
+        return this.lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
     }
 }
