@@ -20,8 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 import com.mspr.arosaje.entity.User;
 import com.mspr.arosaje.repository.UserRepository;
 
-// Annotation Cross Origin si soucis ?
-// Annotation @RequestMapping('/api') si un préfix nécessaire
 @RestController
 public class UserController {
 
