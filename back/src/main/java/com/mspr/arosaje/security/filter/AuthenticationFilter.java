@@ -58,5 +58,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         response.addHeader(SecurityConstants.AUTHORIZATION, SecurityConstants.BEARER + token);
         Cookie tokenCookie = new Cookie("userToken", token);
         response.addCookie(tokenCookie);
+        response.getWriter().write("Bearer " + token);
     }
 }
