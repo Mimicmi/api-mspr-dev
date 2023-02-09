@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +50,7 @@ public class UserController {
         return new ResponseEntity<>(userData.get(), HttpStatus.OK);
     }
 
+    @CrossOrigin
     @PostMapping("users")
     public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
