@@ -90,4 +90,16 @@ public class PlantController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("plants/client/{id}")
+    public ResponseEntity<?> getClientPlants(@PathVariable("id") int id) {
+        Optional<Client> clientData = clientRepository.findById(id);
+        List<Plant> plantData = plantRepository.findByClientId(clientData.get().getId());
+
+        if(!clientData.isPresent()) {
+            return new ResponseEntity<>(plantData, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(plantData, HttpStatus.OK);
+    }
 }
