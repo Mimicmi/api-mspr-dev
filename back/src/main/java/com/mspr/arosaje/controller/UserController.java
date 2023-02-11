@@ -52,11 +52,11 @@ public class UserController {
     }
 
     @PostMapping("users")
-    public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestBody User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(user.getId(), HttpStatus.CREATED);
     }
 
     @PutMapping("users/{id}")
