@@ -48,13 +48,13 @@ public class ClientController {
     }
 
     @PostMapping("clients")
-    public ResponseEntity<HttpStatus> createClient(@RequestBody Client client) {
+    public ResponseEntity<?> createClient(@RequestBody Client client) {
         Optional<User> userData = userRepository.findById(client.getUser().getId());
         if(!userData.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
             clientRepository.save(client);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(client.getId(),HttpStatus.CREATED);
         }
     }
 
