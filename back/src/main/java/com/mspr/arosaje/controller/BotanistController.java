@@ -21,7 +21,7 @@ import com.mspr.arosaje.entity.Client;
 import com.mspr.arosaje.repository.BotanistRepository;
 import com.mspr.arosaje.repository.ClientRepository;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true")
 @RestController
 public class BotanistController {
 

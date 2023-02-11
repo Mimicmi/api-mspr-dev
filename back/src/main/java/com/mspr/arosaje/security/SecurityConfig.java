@@ -26,12 +26,21 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
+        registry.addMapping("/authenticate")
                 .allowedOrigins("http://localhost:3000")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*");
-                //.allowCredentials(true);
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
+
+    // @Override
+    // public void addCorsMappings(CorsRegistry registry) {
+    //     registry.addMapping("/authenticate")
+    //             .allowedOrigins("http://localhost:3000")
+    //             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+    //             .allowedHeaders("*")
+    //             .allowCredentials(true);
+    // }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

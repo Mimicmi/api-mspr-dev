@@ -23,7 +23,7 @@ import com.mspr.arosaje.repository.CommentRepository;
 import com.mspr.arosaje.repository.MaintenanceRepository;
 import com.mspr.arosaje.repository.PhotoRepository;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true")
 @RestController
 public class CommentController {
 

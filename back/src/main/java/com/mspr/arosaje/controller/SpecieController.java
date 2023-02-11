@@ -20,7 +20,7 @@ import com.mspr.arosaje.entity.Specie;
 import com.mspr.arosaje.repository.PlantRepository;
 import com.mspr.arosaje.repository.SpecieRepository;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true")
 @RestController
 public class SpecieController {
 

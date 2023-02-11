@@ -21,7 +21,7 @@ import com.mspr.arosaje.entity.Maintenance;
 import com.mspr.arosaje.repository.AdvertisementRepository;
 import com.mspr.arosaje.repository.MaintenanceRepository;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true")
 @RestController
 public class MaintenanceController {
 

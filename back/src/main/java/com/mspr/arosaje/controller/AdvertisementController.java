@@ -23,7 +23,7 @@ import com.mspr.arosaje.repository.AdvertisementRepository;
 import com.mspr.arosaje.repository.ClientRepository;
 import com.mspr.arosaje.repository.PlantRepository;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true")
 @RestController
 public class AdvertisementController {
 

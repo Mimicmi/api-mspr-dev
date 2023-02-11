@@ -21,7 +21,7 @@ import com.mspr.arosaje.entity.Plant;
 import com.mspr.arosaje.repository.PhotoRepository;
 import com.mspr.arosaje.repository.PlantRepository;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true")
 @RestController
 public class PhotoController {
     

@@ -21,7 +21,7 @@ import com.mspr.arosaje.entity.User;
 import com.mspr.arosaje.repository.ClientRepository;
 import com.mspr.arosaje.repository.UserRepository;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true")
 @RestController
 public class ClientController {
 
