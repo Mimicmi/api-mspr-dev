@@ -1,0 +1,33 @@
+
+@media (min-width: 576px) {
+    .size-image {
+        background-color: tomato;
+    }
+
+}
+
+@media (min-width: 768px) { 
+    .size-image {
+        background-color: tomato;
+    }
+ }
+
+@media (min-width: 992px) { 
+    .size-image {
+        background-color: tomato;
+    }
+}
+
+@media (min-width: 1200px) { 
+    .size-image {
+        background-color: tomato;
+    }
+}
+
+@media (min-width: 1400px) { 
+    .size-image {
+        background-color: tomato;
+    }
+}
+        
+
