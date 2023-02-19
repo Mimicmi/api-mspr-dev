@@ -83,4 +83,17 @@ public class ClientController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+
+    @GetMapping("client/user/{id}")
+    public ResponseEntity<?> getClientByUser(@PathVariable("id") int id) {
+        Optional<User> userData = userRepository.findById(id);
+        List<Client> clientData = clientRepository.findByUserId(userData.get().getId());
+
+        if(!userData.isPresent()) {
+            return new ResponseEntity<>(clientData, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(clientData, HttpStatus.OK);
+    }
 }
