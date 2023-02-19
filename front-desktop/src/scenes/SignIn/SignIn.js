@@ -1,5 +1,5 @@
 import '../Login/Login.css';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 
 import Api from '../../Api';
 
@@ -10,8 +10,6 @@ import Alert from 'react-bootstrap/Alert';
 import { UserContext } from '../../services/UserService'
 
 import { Navigate } from "react-router-dom";
-
-
 
 
 function SignIn() {
@@ -27,7 +25,6 @@ function SignIn() {
             .then(res => res.data)
             .then(
                 (result) => {
-                    console.log("Done : Create Login  + JWT")
                     updateJwt(result)
                     createClients(id_user)
                 },
@@ -95,12 +92,9 @@ function SignIn() {
             .then(res => res.data)
             .then(
                 (result) => {
-                    console.log("Done : Create User")
-                    console.log(result)
                     loginAccount(result)
                 },
                 (error) => {
-                    console.log(error.response.data)
                     setStep(steps.First);
                     setError(true)
                 }
@@ -216,10 +210,8 @@ function SignIn() {
 
             case steps.Success:
                     return <Navigate replace to="/" />
-  
         }
     }
-
 
     return (
         <main class="form-signin">

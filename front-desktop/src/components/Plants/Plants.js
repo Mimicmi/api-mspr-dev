@@ -9,6 +9,7 @@ import Api from '../../Api';
 import { Navigate } from "react-router-dom";
 
 import Placeholder from 'react-bootstrap/Placeholder';
+import ErrorServer from '../../scenes/Error/ErrorServer';
 
 
 
@@ -37,7 +38,7 @@ function Plants() {
 
 
   if (error) {
-    return <Navigate replace to="/403" />
+    return <ErrorServer></ErrorServer>
 
   } else if (!isLoaded) {
     return (<div>

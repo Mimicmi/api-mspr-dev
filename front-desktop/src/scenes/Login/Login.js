@@ -5,10 +5,12 @@ import Alert from 'react-bootstrap/Alert';
 
 
 import { UserContext } from '../../services/UserService'
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const navigate = useNavigate();
 
-  const { updateJwt } = useContext(UserContext);
+  const { updateJwt, updateRole, updateUserId, updateClientId } = useContext(UserContext);
 
 
   const [email, setEmail] = useState('')
@@ -23,18 +25,18 @@ function Login() {
       .then(
         (result) => {
           updateJwt(result)
-          //TODO : suite rôle
+          aksUserId()
         },
         (error) => {
           switch (error.response.data) {
             case "Email incorrect":
-              setError(<Alert key="danger" dismissible  onClose={() => setError("")} variant="warning">Email Inccorret</Alert>)
+              setError(<Alert key="danger" dismissible onClose={() => setError("")} variant="warning">Email Inccorret</Alert>)
               break;
 
-              case "Mot de passe incorrect":
-                setError(<Alert key="danger" dismissible onClose={() => setError("")} variant="warning">Mot de passe incorrect</Alert>)
-                break;
-          
+            case "Mot de passe incorrect":
+              setError(<Alert key="danger" dismissible onClose={() => setError("")} variant="warning">Mot de passe incorrect</Alert>)
+              break;
+
             default:
               setError(<Alert key="danger" dismissible onClose={() => setError("")} variant="danger">Une erreur est survenu !</Alert>)
               break;
@@ -43,26 +45,83 @@ function Login() {
       )
   }
 
+
+  const aksUserId = async () => {
+    Api.get('/user/' + email)
+      .then(res => res.data)
+      .then(
+        (result) => {
+          updateUserId(result.id)
+          askClientId(result.id)
+        },
+        (error) => {
+          setError(<Alert key="danger" dismissible onClose={() => setError("")} variant="danger">Une erreur est survenu !</Alert>)
+        }
+      )
+  }
+
+  const askClientId = async (userId) => {
+    Api.get('/client/user/' + userId)
+      .then(res => res.data)
+      .then(
+        (result) => {
+          updateClientId(result[0].id)
+          askRole(result[0].id)
+        },
+        (error) => {
+          setError(<Alert key="danger" dismissible onClose={() => setError("")} variant="danger">Une erreur est survenu !</Alert>)
+        }
+      )
+  }
+    
+
+  const askRole = async (clientId) => {
+    Api.get('/botanist/client/' + clientId)
+      .then(
+        (result) => {
+          console.log(result)
+          loginFinish(true)
+        },
+        (error) => {
+          console.log(error)
+          loginFinish(false)
+        }
+      )
+  }
+
+  const loginFinish = async (isBotanist) => {
+
+    if(isBotanist) {
+        updateRole("ROLE_BOTANIST")
+    } else {
+      updateRole("ROLE_CLIENT")
+    }
+
+    navigate("/home")
+
+  }
+
+
   return (
     <main class="form-signin">
 
-        <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
-        <h1 class="h3 mb-3 fw-normal">Créer un compte</h1>
+      <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
+      <h1 class="h3 mb-3 fw-normal">Créer un compte</h1>
 
-        <div>{error}</div>
-        <div>
-          <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value={email} onChange={(event) => setEmail(event.target.value)} />
-            <label for="floatingInput">Adresse mail</label>
-          </div>
-
-          <div class="form-floating">
-            <input onChange={(event) => setPassword(event.target.value)} value={password} type="password" class="form-control" id="floatingPassword" placeholder="Password" />
-            <label for="floatingPassword">Mot de passe</label>
-          </div>
-
-          <button onClick={loginAccount} className="w-100 btn btn-lg btn-primary my-3" on>Se connecter</button>
+      <div>{error}</div>
+      <div>
+        <div class="form-floating">
+          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value={email} onChange={(event) => setEmail(event.target.value)} />
+          <label for="floatingInput">Adresse mail</label>
         </div>
+
+        <div class="form-floating">
+          <input onChange={(event) => setPassword(event.target.value)} value={password} type="password" class="form-control" id="floatingPassword" placeholder="Password" />
+          <label for="floatingPassword">Mot de passe</label>
+        </div>
+
+        <button onClick={loginAccount} className="w-100 btn btn-lg btn-primary my-3" on>Se connecter</button>
+      </div>
     </main>
   );
 }

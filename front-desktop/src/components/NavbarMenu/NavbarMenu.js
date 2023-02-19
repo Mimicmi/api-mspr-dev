@@ -5,34 +5,32 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
 
 import { UserContext } from '../../services/UserService'
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
+
+import { Navigate } from 'react-router-dom';
 
 function NavbarMenu() {
 
-  const { role, jwt } = useContext(UserContext);
-  const [idRole, setIdRole] = useState(() => {
-    if(role && jwt) {
-      switch (role) {
-        case "ROLE_BOTANIST":
-          return 2;
-        case "ROLE_CLIENT":
-          return 1;
-        default:
-          return 0;
-      }
-    }
-  })
+  const { role, updateRole, updateJwt } = useContext(UserContext);
+
+
+  const logout = () => {
+    localStorage.clear()
+    updateRole(null);
+    updateJwt(null);
+    return <Navigate to="/login"></Navigate>
+  };
 
   const renderNav = () => {
-    switch (idRole) {
-      case 2:
+    switch (role) {
+      case "ROLE_BOTANIST":
         return(<>
           <Nav.Link href="#deets">Les publications</Nav.Link>
           <Nav.Link href="/species">Les espèces</Nav.Link>
-          <NavDropdown.Item href="#action/3.2">Déconnexion</NavDropdown.Item>
+          <NavDropdown.Item onClick={logout}>Déconnexion</NavDropdown.Item>
           </>
         );
-      case 1:
+      case "ROLE_CLIENT":
         return(<>
           <Nav.Link href="/my-plants">Mes plantes</Nav.Link>
           <NavDropdown title="Annonces" id="collasible-nav-dropdown" href="/les-annonces">
@@ -42,7 +40,7 @@ function NavbarMenu() {
     
           <NavDropdown title="Mon profil" id="collasible-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Mes infos</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Déconnexion</NavDropdown.Item>
+            <NavDropdown.Item onClick={logout}>Déconnexion</NavDropdown.Item>
           </NavDropdown>
         
         </>

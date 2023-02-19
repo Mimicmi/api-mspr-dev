@@ -5,7 +5,11 @@ export const UserContext = createContext({
   jwt: null,
   role: null,
   updateJwt: () => {},
-  updateRole: () => {}
+  updateRole: () => {},
+  updateEmail: () => {},
+  updateUserId: () => {},
+  updateClientId: () => {},
+  updateBotanistId: () => {},
 });
 
 export const UserProvider = ({ children }) => {
@@ -17,7 +21,7 @@ export const UserProvider = ({ children }) => {
   const [jwt, setJwt] = useState(jwtLocal);
   const [role, setRole] = useState(localStorage.getItem("role"));
 
-
+  
   const updateJwt = jwt => {
     localStorage.setItem("Authorization", jwt);
     Api.defaults.headers.common["Authorization"] = jwt
@@ -29,31 +33,47 @@ export const UserProvider = ({ children }) => {
     setRole(role);
   };
 
-  const hasRoles = roles => {
-    switch (roles) {
-      case "*":
-        return true;
 
-      default:
-        if (roles.includes(role)) {
-          return true
-        }
-        break;
-    }
+  const [email, setEmail] = useState(localStorage.getItem("email"));
+  const [userId, setUserId] = useState(localStorage.getItem("userId"));
+  const [clientId, setClientId] = useState(localStorage.getItem("clientId"));
+  const [botanistId, setBotanistId] = useState(localStorage.getItem("botanistId"));
 
-    return false;
+  const updateEmail = email => {
+    localStorage.setItem("email", email);
+    setEmail(email);
   };
 
+  const updateUserId = userId => {
+    localStorage.setItem("userId", userId);
+    setUserId(role);
+  };
 
-  
+  const updateClientId = clientId => {
+    localStorage.setItem("clientId", clientId);
+    setClientId(clientId);
+  };
+
+  const updateBotanistId = botanistId => {
+    localStorage.setItem("botanistId", botanistId);
+    setBotanistId(botanistId);
+  };
 
   return (
     <UserContext.Provider
       value={{
         jwt,
         role,
+        email,
+        userId,
+        clientId,
+        botanistId,
         updateJwt,
-        updateRole
+        updateRole,
+        updateEmail,
+        updateUserId, 
+        updateClientId,
+        updateBotanistId,
       }}
     >
       {children}

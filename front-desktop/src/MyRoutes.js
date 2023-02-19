@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
-import App from "./App";
 import Plants from "./components/Plants/Plants";
 import Annonces from "./scenes/Annonces/Annonces";
 import ErrorNotFound from "./scenes/Error/ErrorNotFound";
@@ -13,27 +12,31 @@ import Login from "./scenes/Login/Login";
 import SignIn from "./scenes/SignIn/SignIn";
 import Home from "./scenes/Home/Home";
 
+import CustomRoute from "./services/Route/CustomRoute";
+
 function MyRoutes() {
   return (
     <Router>
         <Routes>
 
-          <Route path="/"  element={<Home />} />
-          <Route path="/home"  element={<Home />} />
+          <Route path="/"  element={<CustomRoute roles={["*"]} component={<Home/>} />} />
+          <Route path="/home"  element={<CustomRoute roles={["*"]} component={<Home/>} />} />
 
-          <Route path="/login"  element={<Login />} />
-          <Route path="/sign-in"  element={<SignIn />} />
+          <Route path="/login"  element={<CustomRoute roles={["*"]} component={<Login/>} />} />
+          <Route path="/sign-in"  element={<CustomRoute roles={["*"]} component={<SignIn/>} />} />
 
-          <Route path="/my-plants"  element={<Plants />} />
-          <Route path="/my-plant/:plant_id"  element={<Plant />} />
-          <Route path="/my-plants/add"  element={<CreatPlant />} />
-          <Route path="/les-annonces" element={ <Annonces />} />
-          <Route path="/annonce/add" element={ <CreateAnnonce />} />
-          <Route path="/annonce/:advertisement_id" element={ <Advertisement />} />
-          <Route path="/species" element={ <SpeciesCRUD />} />
+          <Route path="/my-plants" element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Plants/>} />} />
+          <Route path="/my-plant/:plant_id"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Plant/>} />} />
+          <Route path="/my-plants/add"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<CreatPlant/>} />} />
 
-          <Route path="404" element={ <ErrorNotFound />} />
-          <Route path="403" element={ <ErrorServer />} />
+          <Route path="/les-annonces"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Annonces/>} />} />
+          <Route path="/annonce/add"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<CreateAnnonce/>} />} />
+          <Route path="/annonce/:advertisement_id"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Advertisement/>} />} />
+
+          <Route path="/species"  element={<CustomRoute roles={["ROLE_BOTANIST"]} component={<SpeciesCRUD/>} />} />
+
+          <Route path="/404"  element={<CustomRoute roles={["*"]} component={<ErrorNotFound/>} />} />
+          <Route path="/403"  element={<CustomRoute roles={["*"]} component={<ErrorServer/>} />} />
 
           <Route path="*" element={ <ErrorNotFound />} />
 
