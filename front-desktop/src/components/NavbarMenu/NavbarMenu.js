@@ -39,7 +39,7 @@ function NavbarMenu() {
           </NavDropdown>
     
           <NavDropdown title="Mon profil" id="collasible-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Mes infos</NavDropdown.Item>
+            <NavDropdown.Item href="/account">Mes infos</NavDropdown.Item>
             <NavDropdown.Item onClick={logout}>Déconnexion</NavDropdown.Item>
           </NavDropdown>
         

@@ -14,6 +14,7 @@ import Home from "./scenes/Home/Home";
 
 import CustomRoute from "./services/Route/CustomRoute";
 import EditPlant from "./scenes/EditPlant/EditPlant";
+import UserProfile from "./scenes/UserProfile/UserProfile";
 
 function MyRoutes() {
   return (
@@ -25,6 +26,8 @@ function MyRoutes() {
 
           <Route path="/login"  element={<CustomRoute roles={["*"]} component={<Login/>} />} />
           <Route path="/sign-in"  element={<CustomRoute roles={["*"]} component={<SignIn/>} />} />
+
+          <Route path="/account"  element={<CustomRoute roles={["ROLE_CLIENT", "ROLE_BOTANIST"]} component={<UserProfile/>} />} />
 
           <Route path="/my-plants" element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Plants/>} />} />
           <Route path="/my-plant/:plant_id"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Plant/>} />} />

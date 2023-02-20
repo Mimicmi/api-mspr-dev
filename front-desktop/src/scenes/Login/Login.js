@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
   const navigate = useNavigate();
 
-  const { updateJwt, updateRole, updateUserId, updateClientId } = useContext(UserContext);
+  const { updateJwt, updateRole, updateUserId, updateClientId, updateBotanistId } = useContext(UserContext);
 
 
   const [email, setEmail] = useState('')
@@ -77,13 +77,13 @@ function Login() {
 
   const askRole = async (clientId) => {
     Api.get('/botanist/client/' + clientId)
+      .then(res => res.data)
       .then(
         (result) => {
-          console.log(result)
+          updateBotanistId(result[0].id)
           loginFinish(true)
         },
         (error) => {
-          console.log(error)
           loginFinish(false)
         }
       )
