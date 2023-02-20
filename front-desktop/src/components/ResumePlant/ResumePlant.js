@@ -2,38 +2,11 @@ import { Image, Table} from "react-bootstrap";
 import React, { useState, useEffect } from 'react';
 import { Navigate } from "react-router-dom";
 import Api from '../../Api';
+import Plant from "../../scenes/Plant/Plant";
 
 
 
 function ResumePlant({plant}) {
-
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-      Api.get('plants')
-        .then(res => res.data)
-        .then(
-          (result) => {
-            setIsLoaded(true);
-            setItems(result);
-          },
-
-          (error) => {
-            setIsLoaded(true);
-            setError(error);
-          }
-        )
-    }, [])
-
-  if (error) {
-    return <Navigate replace to="/403" />
-
-  } else if (!isLoaded) {
-
-    return(<div>Wait</div>)
-  } else {
 
     return (
         <div class="container-fluid rounded">
@@ -47,15 +20,15 @@ function ResumePlant({plant}) {
                     <tbody>
                         <tr>
                             <td>Nom</td>
-                            <td>Mark</td>
+                            <td>Votre Plante {plant.id}</td>
                         </tr>
                         <tr>
                             <td>Adresse</td>
-                            <td>Jacob</td>
+                            <td>{plant.address}</td>
                         </tr>
                         <tr>
                             <td>Espece</td>
-                            <td>Larry the Bird</td>
+                            <td>{plant?.specie?.name}</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -65,5 +38,5 @@ function ResumePlant({plant}) {
     )
 
 }
-}
+
 export default ResumePlant;

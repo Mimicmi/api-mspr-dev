@@ -4,6 +4,10 @@ import Api from '../Api';
 export const UserContext = createContext({
   jwt: null,
   role: null,
+  email: null,
+  userId: null,
+  clientId: null,
+  botanistId: null,
   updateJwt: () => {},
   updateRole: () => {},
   updateEmail: () => {},

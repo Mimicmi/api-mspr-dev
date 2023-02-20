@@ -13,6 +13,7 @@ import SignIn from "./scenes/SignIn/SignIn";
 import Home from "./scenes/Home/Home";
 
 import CustomRoute from "./services/Route/CustomRoute";
+import EditPlant from "./scenes/EditPlant/EditPlant";
 
 function MyRoutes() {
   return (
@@ -27,6 +28,7 @@ function MyRoutes() {
 
           <Route path="/my-plants" element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Plants/>} />} />
           <Route path="/my-plant/:plant_id"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Plant/>} />} />
+          <Route path="/my-plant/edit/:plant_id"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<EditPlant/>} />} />
           <Route path="/my-plants/add"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<CreatPlant/>} />} />
 
           <Route path="/les-annonces"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Annonces/>} />} />

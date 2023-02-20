@@ -3,9 +3,7 @@ import Badge from 'react-bootstrap/Badge';
 
 import Button from 'react-bootstrap/Button';
 
-
-function PlantPreview({ item }) {
-
+function PlantPreview({ item, onRemovePlant }) {
   return (
     <div className="container mx-auto" >
       <div className="row justify-content-md-center">
@@ -18,7 +16,7 @@ function PlantPreview({ item }) {
 
               <div className="media-body col-lg-6  col-sm-12">
                 <h6 className="media-title font-weight-semibold mb-lg-3 col-12">
-                  <a href="login" data-abc="true">My Plantos name</a>
+                  <a href={'my-plant/' + item.id } data-abc="true">My Plantos name</a>
                 </h6>
 
                 <Badge pill bg="primary" className="mb-3 mb-lg-4">
@@ -30,9 +28,9 @@ function PlantPreview({ item }) {
               </div>
 
               <div class="mt-3 mt-lg-0 ml-lg-3 text-center d-lg-flex  flex-lg-column col-lg-3 col-sm-12 col-12">
-                <Button variant="primary">Editer</Button>
+                <Button href={'my-plant/edit/' + item.id } variant="primary">Editer</Button>
                 <Button href={'my-plant/' + item.id } variant="light">Voir</Button>
-                <Button variant="warning">Supprimer</Button>
+                <Button onClick={() => {onRemovePlant(item.id)}} variant="warning">Supprimer</Button>
               </div>
                 
               </div>
@@ -40,9 +38,7 @@ function PlantPreview({ item }) {
           </div>
         </div>
       </div>
-
     )
-
 }
 
 export default PlantPreview;

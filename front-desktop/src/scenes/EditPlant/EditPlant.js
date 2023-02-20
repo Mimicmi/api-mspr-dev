@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import AddressInput from '../../components/AddressInput/AddressInput';
 import Api from '../../Api';
@@ -6,12 +6,13 @@ import SpeciesInput from '../../components/SpeciesInput/SpeciesInput';
 
 import { UserContext } from '../../services/UserService'
 import { useNavigate } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
-const CreatePlant = () => {
+const EditPlant = () => {
 
   const navigate = useNavigate();
 
-
+  const { plant_id } = useParams();
   const { clientId } = useContext(UserContext);
 
   const [name, setName] = useState('');
@@ -20,8 +21,27 @@ const CreatePlant = () => {
   const [longitude, setLongitude] = useState('');
   const [specie, setSpecie] = useState('');
 
-  const handleSubmit = async (event) => {
 
+  useEffect(() => {
+    Api.get('plants/' + plant_id)
+      .then(res => res.data)
+      .then(
+        (result) => {
+            setName(result.id)
+            setAddress(result.address)
+            setLatitude(result.latitude)
+            setLongitude(result.longitude)
+            setSpecie(result.specie.id)
+        },
+
+        (error) => {
+
+        }
+      )
+  }, [])
+
+
+  const handleSubmit = async (event) => {
     const data = {
       "client": {
           "id": clientId
@@ -35,7 +55,7 @@ const CreatePlant = () => {
       "latitude": longitude
   };
 
-    Api.post('plants', data)
+    Api.put('plants/' + plant_id , data)
       .then(res => res.data)
       .then(
         (result) => {
@@ -85,4 +105,4 @@ const CreatePlant = () => {
   );
 };
 
-export default CreatePlant;
+export default EditPlant;
