@@ -1,6 +1,9 @@
 package com.mspr.arosaje.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,19 +40,44 @@ public class AdvertisementController {
     PlantRepository plantRepository;
 
     @GetMapping("advertisements")
-    public ResponseEntity<List<Advertisement>> getAdvertisements() {
+    public ResponseEntity<List<Map<String, Object>>> getAdvertisements() {
         List<Advertisement> advertisements = advertisementRepository.findAll();
-        return new ResponseEntity<>(advertisements, HttpStatus.OK);
+        List<Map<String, Object>> responseList = new ArrayList<>();
+        for (Advertisement advertisement : advertisements) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", advertisement.getId());
+            response.put("client_id", advertisement.getClient().getId());
+            Map<String, Object> plantInfo = new HashMap<>();
+            plantInfo.put("id", advertisement.getPlant().getId());
+            plantInfo.put("longitude", advertisement.getPlant().getLatitude());
+            plantInfo.put("latitude", advertisement.getPlant().getLongitude());
+
+            response.put("plant", plantInfo);
+            response.put("plant_id", advertisement.getPlant().getId());
+            
+            response.put("date_in", advertisement.getDate_in());
+            response.put("date_out", advertisement.getDate_out());
+            response.put("price", advertisement.getPrice());
+            responseList.add(response);
+        }
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
     @GetMapping("advertisements/{id}")
-    public ResponseEntity<Advertisement> getAdvertisementById(@PathVariable("id") int id) {
+    public ResponseEntity<?> getAdvertisementById(@PathVariable("id") int id) {
         Optional<Advertisement> advertisementData = advertisementRepository.findById(id);
 
-        if (!advertisementData.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(advertisementData.get(), HttpStatus.OK);
+        Advertisement advertisement = advertisementData.get();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", advertisement.getId());
+        response.put("client_id", advertisement.getClient().getId());
+        response.put("plant_id", advertisement.getPlant().getId());
+        response.put("date_in", advertisement.getDate_in());
+        response.put("date_out", advertisement.getDate_out());
+        response.put("price", advertisement.getPrice());
+      
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("advertisements")
@@ -90,4 +118,32 @@ public class AdvertisementController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("advertisements/client/{id}")
+    public ResponseEntity<?> getClientPlants(@PathVariable("id") int id) {
+        Optional<Client> clientData = clientRepository.findById(id);
+        List<Advertisement> advertisementData = advertisementRepository.findByClientId(clientData.get().getId());
+
+        List<Map<String, Object>> responseList = new ArrayList<>();
+        for (Advertisement advertisement : advertisementData) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", advertisement.getId());
+            response.put("client_id", advertisement.getClient().getId());
+            Map<String, Object> plantInfo = new HashMap<>();
+            plantInfo.put("id", advertisement.getPlant().getId());
+            plantInfo.put("longitude", advertisement.getPlant().getLatitude());
+            plantInfo.put("latitude", advertisement.getPlant().getLongitude());
+
+            response.put("plant", plantInfo);
+            response.put("plant_id", advertisement.getPlant().getId());
+            
+            response.put("date_in", advertisement.getDate_in());
+            response.put("date_out", advertisement.getDate_out());
+            response.put("price", advertisement.getPrice());
+            responseList.add(response);
+        }
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+
+    
 }

@@ -3,6 +3,9 @@ package com.mspr.arosaje.controller;
 import java.util.List;
 import java.util.Optional;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,13 +46,27 @@ public class PlantController {
     }
 
     @GetMapping("plants/{id}")
-    public ResponseEntity<Plant> getPlantById(@PathVariable("id") int id) {
+    public ResponseEntity<Map<String, Object>> getPlantById(@PathVariable("id") int id) {
         Optional<Plant> plantData = plantRepository.findById(id);
 
         if (!plantData.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(plantData.get(), HttpStatus.OK);
+        Plant plant = plantData.get();
+        Specie specie = plant.getSpecie();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", plant.getId());
+        response.put("address", plant.getAddress());
+        response.put("latitude", plant.getLatitude());
+        response.put("longitude", plant.getLongitude());
+        response.put("profil_photo", plant.getProfil_photo());
+        Map<String, Object> specieInfo = new HashMap<>();
+        specieInfo.put("id", specie.getId());
+        specieInfo.put("name", specie.getSpecie());
+        response.put("specie", specieInfo);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("plants")

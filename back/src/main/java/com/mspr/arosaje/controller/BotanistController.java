@@ -81,4 +81,20 @@ public class BotanistController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("botanist/client/{id}")
+    public ResponseEntity<?> getBotanistByClient(@PathVariable("id") int id) {
+        Optional<Client> clientData = clientRepository.findById(id);
+        List<Botanist> botanistData = botanistRepository.findByClientId(clientData.get().getId());
+
+        if (!clientData.isPresent()) {
+            return new ResponseEntity<>(clientData, HttpStatus.NOT_FOUND);
+        }
+
+        if (botanistData.isEmpty()) {
+            return new ResponseEntity<>("Aucun Résultat", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(botanistData, HttpStatus.OK);
+    }
 }

@@ -1,6 +1,9 @@
 package com.mspr.arosaje.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +41,22 @@ public class ClientController {
     }
 
     @GetMapping("clients/{id}")
-    public ResponseEntity<Client> getClientById(@PathVariable("id") int id) {
+    public ResponseEntity<?> getClientById(@PathVariable("id") int id) {
         Optional<Client> clientData = clientRepository.findById(id);
 
-        if (!clientData.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(clientData.get(), HttpStatus.OK);
+        Client client = clientData.get();
+        User user = client.getUser();
+    
+        Map<String, Object> response = new HashMap<>();
+            response.put("id", client.getId());
+            response.put("address", client.getAddress());
+            response.put("createdAt", client.getCreatedAt());
+            response.put("updatedAt", client.getUpdatedAt());
+            response.put("lon", client.getLon());
+            response.put("lat", client.getLat());
+            response.put("user_id", user.getId());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("clients")
@@ -82,5 +94,17 @@ public class ClientController {
         } catch (Exception err) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("client/user/{id}")
+    public ResponseEntity<?> getClientByUser(@PathVariable("id") int id) {
+        Optional<User> userData = userRepository.findById(id);
+        List<Client> clientData = clientRepository.findByUserId(userData.get().getId());
+
+        if(!userData.isPresent()) {
+            return new ResponseEntity<>(clientData, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(clientData, HttpStatus.OK);
     }
 }
