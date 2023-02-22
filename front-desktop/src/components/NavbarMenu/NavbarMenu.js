@@ -34,7 +34,7 @@ function NavbarMenu() {
         return(<>
           <Nav.Link href="/my-plants">Mes plantes</Nav.Link>
           <NavDropdown title="Annonces" id="collasible-nav-dropdown" href="/les-annonces">
-            <NavDropdown.Item href="#action/3.1">Mes annonces</NavDropdown.Item>
+            <NavDropdown.Item href="/les-annonces/to-me">Mes annonces</NavDropdown.Item>
             <NavDropdown.Item href="/les-annonces">Les annonces</NavDropdown.Item>
           </NavDropdown>
     

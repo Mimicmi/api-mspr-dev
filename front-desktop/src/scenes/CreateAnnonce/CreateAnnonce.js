@@ -1,20 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form } from 'react-bootstrap';
 import AddressInput from '../../components/AddressInput/AddressInput';
 import PlantsInput from '../../components/PlantsInput/PlantsInput'
 
+import { UserContext } from '../../services/UserService'
+
+import Api from '../../Api';
+
+
 
 const CreateAnnonce = () => {
 
+    const { clientId } = useContext(UserContext);
+
+
     const [plant, setPlant] = useState('');
-    const [address, setAddress] = useState('');
-    const [latitude, setLatitude] = useState('');
-    const [longitude, setLongitude] = useState('');
     const [date_in, setDate_in] = useState(new Date());
     const [date_out, setDate_out] = useState(new Date());
     const [price, setPrice] = useState('');
 
+
+
     const handleSubmit = async (event) => {
+
+        const data = {
+            "client": {
+                "id": clientId
+            },
+            "plant": {
+                "id": plant
+            },
+            "date_in": date_in.toLocaleString().replace(/:\d{2}\s/,' ').replace("/", "-").replace("/", "-"),
+            "date_out": date_out.toLocaleString().replace(/:\d{2}\s/,' ').replace("/", "-").replace("/", "-"),
+            "price": price
+        }
+
+        console.log(data)
+
+        Api.post('advertisements', data)
+            .then(res => res.data)
+            .then(
+                (result) => {
+                },
+                (error) => {
+                    console.log(error)
+                }
+            )
     };
 
     return (
@@ -44,17 +75,6 @@ const CreateAnnonce = () => {
                             value={date_out.toISOString().substr(0, 10)}
                             onChange={(e) => setDate_out(new Date(e.target.value))} />
                     </div>
-                </Form.Group>
-
-                <Form.Group className='mt-3'>
-                    <AddressInput
-                        address={address}
-                        setAddress={setAddress}
-                        latitude={latitude}
-                        setLatitude={setLatitude}
-                        longitude={longitude}
-                        setLongitude={setLongitude}
-                    />
                 </Form.Group>
 
                 <Form.Group className='mt-3'>

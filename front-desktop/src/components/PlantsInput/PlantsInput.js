@@ -1,14 +1,19 @@
 import Api from '../../Api';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Form, ListGroup } from 'react-bootstrap';
 
-const SpeciesInput = ({ plant, setPlant }) => {
+import { UserContext } from '../../services/UserService'
+
+
+const PlantsInput = ({ plant, setPlant }) => {
+
+    const { clientId } = useContext(UserContext);
 
 
     const [plants, setPlants] = useState([]);
 
     useEffect(() => {
-        Api.get('plants')
+        Api.get('plants/client/' + clientId)
             .then(res => res.data)
             .then(
                 (result) => {
@@ -21,7 +26,7 @@ const SpeciesInput = ({ plant, setPlant }) => {
     return (
         <div>
             <Form.Group>
-                <Form.Select multiple value={plant} onChange={(event) => setPlant(event.target.value)}>
+                <Form.Select value={plant} onChange={(event) => setPlant(event.target.value)}>
                     <option value="" disabled>Selectionner plante(s)</option>
                     {plants.map(specieOneByOne => (
                         <option value={specieOneByOne.id}>{specieOneByOne.address}</option>
@@ -33,4 +38,4 @@ const SpeciesInput = ({ plant, setPlant }) => {
 
 }
 
-export default SpeciesInput;
+export default PlantsInput;

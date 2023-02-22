@@ -35,6 +35,7 @@ function MyRoutes() {
           <Route path="/my-plants/add"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<CreatPlant/>} />} />
 
           <Route path="/les-annonces"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Annonces/>} />} />
+          <Route path="/les-annonces/:mine"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Annonces/>} />} />
           <Route path="/annonce/add"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<CreateAnnonce/>} />} />
           <Route path="/annonce/:advertisement_id"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Advertisement/>} />} />
 
