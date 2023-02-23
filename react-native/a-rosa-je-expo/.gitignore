@@ -23,6 +23,7 @@ web-build/
 */Settings/ui.plist
 
 node_modules
+../../*/node_modules
 notes.md
 .env
 coverage/
