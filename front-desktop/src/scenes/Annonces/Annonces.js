@@ -5,6 +5,12 @@ import Api from '../../Api';
 import { useParams } from "react-router-dom";
 import { UserContext } from '../../services/UserService'
 
+import AdvertisementCard from "../../components/Advertisements/Card/AdvertisementCard";
+
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import AdvertisementMap from "../../components/Advertisements/Map/AdvertisementMap";
+
 function Annonces() {
   const { mine } = useParams();
   const { clientId } = useContext(UserContext);
@@ -39,32 +45,6 @@ function Annonces() {
   }, [])
 
 
-  const contentAnnonce = () => {
-    if (annonces.length == 0) {
-      if (mine) {
-        return (
-          <h2>Vous n'avez pas encore poster d'annonce</h2>
-        )
-      } else {
-        return (
-          <h2>Pas encore d'annonce poster</h2>
-        )
-      }
-    }
-
-    return (
-      annonces.map(annonce => {
-        if (mine || annonce.client_id != clientId) {
-          return (
-            <div className="col-md-4 px-0" key={annonce.id}>
-              <Annonce annonce={annonce} />
-            </div>
-          )
-        } else {
-          return null;
-        }
-      }) )
-  }
 
 
   if (error) {
@@ -82,9 +62,23 @@ function Annonces() {
           <Button href='/annonce/add' variant="outline-primary">Ajouter une annonces</Button>
         </div>
 
-        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mx-0">
-          {contentAnnonce()}
-        </div>
+
+        <Tabs
+          defaultActiveKey="card"
+          id="fill-tab-example"
+          className="mb-3"
+          fill
+        >
+          <Tab eventKey="card" title="Card">
+            <AdvertisementCard annonces={annonces} mine={mine} clientId={clientId}></AdvertisementCard>
+          </Tab>
+          <Tab eventKey="carte" title="Carte">
+            <AdvertisementMap annonces={annonces} mine={mine} clientId={clientId}></AdvertisementMap>
+          </Tab>
+
+        </Tabs>
+
+
       </div>
     );
   }

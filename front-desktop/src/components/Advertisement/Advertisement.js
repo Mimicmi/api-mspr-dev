@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../services/UserService'
 
+import 'leaflet/dist/leaflet.css';
+
+import './Advertisement.css'
 import {
     Card,
     Modal,
@@ -15,11 +18,11 @@ import Api from "../../Api";
 import ErrorServer from '../../scenes/Error/ErrorServer';
 import { useNavigate } from 'react-router-dom';
 
+import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 
 function Advertisement() {
     const navigate = useNavigate();
     const { clientId } = useContext(UserContext);
-
 
     const { advertisement_id } = useParams();
 
@@ -28,6 +31,7 @@ function Advertisement() {
     const [advertisement, setAdvertisement] = useState([]);
 
     const [plant, setPlant] = useState(null);
+    const [position, setPosition] = useState([0, 0]);
     const [client, setClient] = useState(null);
     const [user, setUser] = useState(null);
 
@@ -89,6 +93,9 @@ function Advertisement() {
                         .then(
                             (result) => {
                                 setPlant(result)
+                                setPosition([result.longitude, result.latitude])
+
+
                                 Api.get('clients/' + result_advertisement.client_id)
                                     .then(res => res.data)
                                     .then(
@@ -127,7 +134,7 @@ function Advertisement() {
     const contentButton = () => {
         if (clientId == advertisement.client_id) {
             return (<div><Button onClick={handleShow} style={{ width: "70%" }}>Modifer</Button>
-            <Button onClick={deleteAdvertisment} style={{ width: "30%" }}>Suprimer</Button></div>)
+                <Button onClick={deleteAdvertisment} style={{ width: "30%" }}>Suprimer</Button></div>)
         } else {
             return (<Button style={{ width: "100%" }}>Postuler</Button>)
         }
@@ -154,7 +161,7 @@ function Advertisement() {
                             <Col md={8}>
                                 <Card.Body>
                                     <Card.Subtitle>{user.pseudo}</Card.Subtitle>
-                                    <Card.Subtitle>{client.address}</Card.Subtitle>
+                                    <Card.Subtitle>{plant.address}</Card.Subtitle>
                                     <Card.Text>
                                         <strong>Price: </strong>
                                         {advertisement.price} €
@@ -175,6 +182,18 @@ function Advertisement() {
                     </Container>
                 </Card>
 
+                <MapContainer className='leaflet-advertisement m-auto' center={position} zoom={14} scrollWheelZoom={false}>
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={position}>
+                        <Popup>
+                            A pretty CSS3 popup. <br /> Easily customizable.
+                        </Popup>
+                    </Marker>
+                </MapContainer>
+
 
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
@@ -192,7 +211,7 @@ function Advertisement() {
                                     }}
                                 />
                             </Form.Group>
-  
+
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>

@@ -1,0 +1,17 @@
+.leaflet-advertisements {
+    height: 400px;
+    width: 90%;
+  }
+
+
+  .leaflet-popup-advertisement-card {
+    width: 400px;
+  }
+
+  .leaflet-popup-content p {
+    margin: 0;
+}
+
+.leaflet-container a {
+    color: white;
+}
