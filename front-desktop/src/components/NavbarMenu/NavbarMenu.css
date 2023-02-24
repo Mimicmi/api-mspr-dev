@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap');
+
+
+.nom-projet {
+    position: relative;
+    display: inline-block;
+    transition: color 0.2s ease-in-out;
+    font-family: 'Tilt Warp', cursive;
+  }
+  
+  .nom-projet::before,
+  .nom-projet::after {
+    content: "";
+    position: absolute;
+    height: 4px;
+    width: 0;
+    background-color: #00ff00;
+    transition: width 0.2s ease-in-out;
+  }
+  
+  .nom-projet::before {
+    top: 0;
+    left: 0;
+  }
+  
+  .nom-projet::after {
+    bottom: 0;
+    right: 0;
+  }
+  
+  .nom-projet:hover {
+    color: #00ff00;
+  }
+  
+  .nom-projet:hover::before,
+  .nom-projet:hover::after {
+    width: 100%;
+  }
+  

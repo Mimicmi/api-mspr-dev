@@ -4,6 +4,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
 
+import './NavbarMenu.css'
+
 import { UserContext } from '../../services/UserService'
 import React, { useContext } from 'react';
 
@@ -15,7 +17,7 @@ function NavbarMenu() {
 
 
   const logout = () => {
-    localStorage.clear()
+    sessionStorage.clear()
     updateRole(null);
     updateJwt(null);
     return <Navigate to="/login"></Navigate>
@@ -25,9 +27,9 @@ function NavbarMenu() {
     switch (role) {
       case "ROLE_BOTANIST":
         return(<>
-          <Nav.Link href="#deets">Les publications</Nav.Link>
-          <Nav.Link href="/species">Les espèces</Nav.Link>
-          <NavDropdown.Item onClick={logout}>Déconnexion</NavDropdown.Item>
+          <Nav.Link href="#deets">Publications</Nav.Link>
+          <Nav.Link href="/species">Espèces</Nav.Link>
+          <Nav.Link onClick={logout}>Déconnexion</Nav.Link>
           </>
         );
       case "ROLE_CLIENT":
@@ -57,7 +59,7 @@ function NavbarMenu() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="secondary" variant="secondary">
       <Container>
-        <Navbar.Brand href="/">Arrosa-je</Navbar.Brand>
+        <Navbar.Brand href="/" className='nom-projet'>Arrosa-je</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto"></Nav>

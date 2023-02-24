@@ -18,48 +18,48 @@ export const UserContext = createContext({
 
 export const UserProvider = ({ children }) => {
 
-  const jwtLocal = localStorage.getItem("Authorization");
+  const jwtLocal = sessionStorage.getItem("Authorization");
   if(jwtLocal) {
     Api.defaults.headers.common["Authorization"] = jwtLocal
   }
   const [jwt, setJwt] = useState(jwtLocal);
-  const [role, setRole] = useState(localStorage.getItem("role"));
+  const [role, setRole] = useState(sessionStorage.getItem("role"));
 
   
   const updateJwt = jwt => {
-    localStorage.setItem("Authorization", jwt);
+    sessionStorage.setItem("Authorization", jwt);
     Api.defaults.headers.common["Authorization"] = jwt
     setJwt(jwt);
   };
 
   const updateRole = role => {
-    localStorage.setItem("role", role);
+    sessionStorage.setItem("role", role);
     setRole(role);
   };
 
 
-  const [email, setEmail] = useState(localStorage.getItem("email"));
-  const [userId, setUserId] = useState(localStorage.getItem("userId"));
-  const [clientId, setClientId] = useState(localStorage.getItem("clientId"));
-  const [botanistId, setBotanistId] = useState(localStorage.getItem("botanistId"));
+  const [email, setEmail] = useState(sessionStorage.getItem("email"));
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId"));
+  const [clientId, setClientId] = useState(sessionStorage.getItem("clientId"));
+  const [botanistId, setBotanistId] = useState(sessionStorage.getItem("botanistId"));
 
   const updateEmail = email => {
-    localStorage.setItem("email", email);
+    sessionStorage.setItem("email", email);
     setEmail(email);
   };
 
   const updateUserId = userId => {
-    localStorage.setItem("userId", userId);
+    sessionStorage.setItem("userId", userId);
     setUserId(role);
   };
 
   const updateClientId = clientId => {
-    localStorage.setItem("clientId", clientId);
+    sessionStorage.setItem("clientId", clientId);
     setClientId(clientId);
   };
 
   const updateBotanistId = botanistId => {
-    localStorage.setItem("botanistId", botanistId);
+    sessionStorage.setItem("botanistId", botanistId);
     setBotanistId(botanistId);
   };
 
