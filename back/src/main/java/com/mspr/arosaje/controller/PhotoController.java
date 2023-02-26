@@ -1,5 +1,11 @@
 package com.mspr.arosaje.controller;
 
+import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mspr.arosaje.entity.Photo;
@@ -30,6 +38,8 @@ public class PhotoController {
 
     @Autowired
     PlantRepository plantRepository;
+
+    private final String UPLOAD_DIR = "./uploads/";
 
     @GetMapping("photos")
     public ResponseEntity<List<Photo>> getPhotos() {
@@ -48,7 +58,12 @@ public class PhotoController {
     }
 
     @PostMapping("photos")
-    public ResponseEntity<HttpStatus> createPhoto(@RequestBody Photo photo) {
+    public ResponseEntity<HttpStatus> createPhoto(@RequestParam Photo photo, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+
+        Path path = Paths.get(UPLOAD_DIR + multipartFile.getOriginalFilename());
+        System.out.println(path);
+        Files.write(path, multipartFile.getBytes());
+
         Optional<Plant> plantData = plantRepository.findById(photo.getPlant().getId());
         if (!plantData.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
