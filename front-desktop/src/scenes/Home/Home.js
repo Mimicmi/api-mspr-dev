@@ -1,6 +1,9 @@
 import React from 'react';
 import { Container, Row, Col, Button, Card, Image } from 'react-bootstrap';
 
+import feuillage from "../../assets/img/feuillage.jpg"
+import './Home.css'
+
 function Home() {
   return (
     <Container>
@@ -13,7 +16,7 @@ function Home() {
 
       <Row className="my-5">
         <Col md={6}>
-          <Image src="/plant-1.jpg" fluid />
+          <Image className='homePhoto' src={feuillage} fluid />
         </Col>
         <Col md={6}>
           <Card>

@@ -15,6 +15,7 @@ import Home from "./scenes/Home/Home";
 import CustomRoute from "./services/Route/CustomRoute";
 import EditPlant from "./scenes/EditPlant/EditPlant";
 import UserProfile from "./scenes/UserProfile/UserProfile";
+import Post from "./components/Post/Post";
 
 function MyRoutes() {
   return (
@@ -40,6 +41,8 @@ function MyRoutes() {
           <Route path="/annonce/:advertisement_id"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Advertisement/>} />} />
 
           <Route path="/species"  element={<CustomRoute roles={["ROLE_BOTANIST"]} component={<SpeciesCRUD/>} />} />
+
+          <Route path="/post"  element={<CustomRoute roles={["ROLE_BOTANIST", "ROLE_CLIENT"]} component={<Post/>} />} />
 
           <Route path="/404"  element={<CustomRoute roles={["*"]} component={<ErrorNotFound/>} />} />
           <Route path="/403"  element={<CustomRoute roles={["*"]} component={<ErrorServer/>} />} />

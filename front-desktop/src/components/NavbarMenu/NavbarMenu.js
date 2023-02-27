@@ -27,7 +27,7 @@ function NavbarMenu() {
     switch (role) {
       case "ROLE_BOTANIST":
         return(<>
-          <Nav.Link href="#deets">Publications</Nav.Link>
+          <Nav.Link href="/post">Publications</Nav.Link>
           <Nav.Link href="/species">Espèces</Nav.Link>
           <Nav.Link onClick={logout}>Déconnexion</Nav.Link>
           </>
@@ -39,6 +39,8 @@ function NavbarMenu() {
             <NavDropdown.Item href="/les-annonces/to-me">Mes annonces</NavDropdown.Item>
             <NavDropdown.Item href="/les-annonces">Les annonces</NavDropdown.Item>
           </NavDropdown>
+
+          <Nav.Link href="/post">Publications</Nav.Link>
     
           <NavDropdown title="Mon profil" id="collasible-nav-dropdown">
             <NavDropdown.Item href="/account">Mes infos</NavDropdown.Item>
