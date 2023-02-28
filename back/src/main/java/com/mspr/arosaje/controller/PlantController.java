@@ -61,6 +61,7 @@ public class PlantController {
         response.put("latitude", plant.getLatitude());
         response.put("longitude", plant.getLongitude());
         response.put("profil_photo", plant.getProfil_photo());
+        response.put("label", plant.getLabel());
         Map<String, Object> specieInfo = new HashMap<>();
         specieInfo.put("id", specie.getId());
         specieInfo.put("name", specie.getSpecie());
@@ -95,6 +96,7 @@ public class PlantController {
         _plant.setSpecie(plant.getSpecie());
         _plant.setLatitude(plant.getLatitude());
         _plant.setLongitude(plant.getLongitude());
+        _plant.setLabel(plant.getLabel());
         return new ResponseEntity<>(plantRepository.save(_plant), HttpStatus.OK);
     }
 

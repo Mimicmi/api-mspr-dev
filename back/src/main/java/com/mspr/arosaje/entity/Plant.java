@@ -36,11 +36,12 @@ public class Plant {
     private double latitude;
     private double longitude;
     private String profil_photo;
+    private String label;
 
     public Plant() {
     }
 
-    public Plant(int id, Client client, Specie specie, String address, double latitude, double longitude, String profil_photo) {
+    public Plant(int id, Client client, Specie specie, String address, double latitude, double longitude, String profil_photo, String label) {
         this.id = id;
         this.client = client;
         this.specie = specie;
@@ -48,6 +49,7 @@ public class Plant {
         this.latitude = latitude;
         this.longitude = longitude;
         this.profil_photo = profil_photo;
+        this.label = label;
     }
 
     public int getId() {
@@ -105,5 +107,13 @@ public class Plant {
     public void setProfil_photo(String profil_photo) {
         this.profil_photo = profil_photo;
     }
-    
+
+    public String getLabel() {
+        return this.label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
 }
