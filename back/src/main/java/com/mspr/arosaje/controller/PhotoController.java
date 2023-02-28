@@ -1,6 +1,9 @@
 package com.mspr.arosaje.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +35,54 @@ public class PhotoController {
     PlantRepository plantRepository;
 
     @GetMapping("photos")
-    public ResponseEntity<List<Photo>> getPhotos() {
+    public ResponseEntity<List<Map<String, Object>>> getPhotos() {
         List<Photo> photos = photoRepository.findAll();
-        return new ResponseEntity<>(photos, HttpStatus.OK);
+
+        List<Map<String, Object>> responseList = new ArrayList<>();
+        for (Photo photo : photos) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", photo.getId());
+            response.put("image", photo.getImage());
+            response.put("plant_id", photo.getPlant().getId());
+
+            responseList.add(response);
+        }
+
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+
+    @GetMapping("photosCustom/{id}")
+    public ResponseEntity<Map<String, Object>> getPhotoCustomById(@PathVariable("id") int id) {
+        Optional<Photo> photoData = photoRepository.findById(id);
+
+        if (!photoData.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        
+        Photo photo = photoData.get();
+
+
+            Map<String, Object> response = new HashMap<>();
+
+            response.put("id", photo.getId());
+            response.put("image", photo.getImage());
+
+            Map<String, Object> plantInfo = new HashMap<>();
+            plantInfo.put("id", photo.getPlant().getId());
+            plantInfo.put("name", photo.getPlant().getId());
+
+            response.put("plant", plantInfo);
+
+
+            Map<String, Object> clientInfo = new HashMap<>();
+            clientInfo.put("id", photo.getPlant().getClient().getId());
+            clientInfo.put("name", photo.getPlant().getClient().getUser().getPseudo());
+
+            response.put("client", clientInfo);
+
+
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("photos/{id}")
@@ -79,5 +127,18 @@ public class PhotoController {
         } catch (Exception err) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+
+    @GetMapping("photo/plant/{id}")
+    public ResponseEntity<?> getClientPlants(@PathVariable("id") int id) {
+        Optional<Plant> plantData = plantRepository.findById(id);
+        List<Photo> photoData = photoRepository.findByPlantId(plantData.get().getId());
+
+        if(!plantData.isPresent()) {
+            return new ResponseEntity<>(plantData, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(photoData, HttpStatus.OK);
     }
 }

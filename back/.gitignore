@@ -19,6 +19,11 @@ target/
 *.iml
 *.ipr
 
+### Asset ###
+#public/upload/maintenance
+#public/upload/photo
+#public/upload/plant_profil
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

@@ -11,7 +11,7 @@ function PostsForPlant({plant_id}) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-      Api.get('plants')
+      Api.get('photo/plant/' + plant_id)
         .then(res => res.data)
         .then(
           (result) => {

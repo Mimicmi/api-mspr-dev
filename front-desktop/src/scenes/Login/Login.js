@@ -106,7 +106,7 @@ function Login() {
     <main class="form-signin">
 
       <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
-      <h1 class="h3 mb-3 fw-normal">Créer un compte</h1>
+      <h1 class="h3 mb-3 fw-normal">Connectez-vous</h1>
 
       <div>{error}</div>
       <div>

@@ -15,7 +15,9 @@ import Home from "./scenes/Home/Home";
 import CustomRoute from "./services/Route/CustomRoute";
 import EditPlant from "./scenes/EditPlant/EditPlant";
 import UserProfile from "./scenes/UserProfile/UserProfile";
-import Post from "./components/Post/Post";
+import FileUpload from "./components/uploadFile/uploadFile";
+import CreatePost from "./scenes/CreatePost/CreatePost";
+import Posts from "./scenes/Posts/Posts";
 
 function MyRoutes() {
   return (
@@ -25,13 +27,15 @@ function MyRoutes() {
           <Route path="/"  element={<CustomRoute roles={["*"]} component={<Home/>} />} />
           <Route path="/home"  element={<CustomRoute roles={["*"]} component={<Home/>} />} />
 
+          <Route path="/uplaod"  element={<CustomRoute roles={["*"]} component={<FileUpload/>} />} />
+
           <Route path="/login"  element={<CustomRoute roles={["*"]} component={<Login/>} />} />
           <Route path="/sign-in"  element={<CustomRoute roles={["*"]} component={<SignIn/>} />} />
 
           <Route path="/account"  element={<CustomRoute roles={["ROLE_CLIENT", "ROLE_BOTANIST"]} component={<UserProfile/>} />} />
 
           <Route path="/my-plants" element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Plants/>} />} />
-          <Route path="/my-plant/:plant_id"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<Plant/>} />} />
+          <Route path="/my-plant/:plant_id"  element={<CustomRoute roles={["ROLE_CLIENT", "ROLE_BOTANIST"]} component={<Plant/>} />} />
           <Route path="/my-plant/edit/:plant_id"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<EditPlant/>} />} />
           <Route path="/my-plants/add"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<CreatPlant/>} />} />
 
@@ -42,7 +46,8 @@ function MyRoutes() {
 
           <Route path="/species"  element={<CustomRoute roles={["ROLE_BOTANIST"]} component={<SpeciesCRUD/>} />} />
 
-          <Route path="/post"  element={<CustomRoute roles={["ROLE_BOTANIST", "ROLE_CLIENT"]} component={<Post/>} />} />
+          <Route path="/post"  element={<CustomRoute roles={["ROLE_BOTANIST", "ROLE_CLIENT"]} component={<Posts/>} />} />
+          <Route path="/post/add"  element={<CustomRoute roles={["ROLE_CLIENT"]} component={<CreatePost/>} />} />
 
           <Route path="/404"  element={<CustomRoute roles={["*"]} component={<ErrorNotFound/>} />} />
           <Route path="/403"  element={<CustomRoute roles={["*"]} component={<ErrorServer/>} />} />

@@ -40,7 +40,10 @@ function NavbarMenu() {
             <NavDropdown.Item href="/les-annonces">Les annonces</NavDropdown.Item>
           </NavDropdown>
 
-          <Nav.Link href="/post">Publications</Nav.Link>
+          <NavDropdown title="Les Publications" id="collasible-nav-dropdown" href="/post">
+            <NavDropdown.Item  href="/post">Publications</NavDropdown.Item>
+            <NavDropdown.Item  href="/post/add">Ajouter</NavDropdown.Item>
+          </NavDropdown>
     
           <NavDropdown title="Mon profil" id="collasible-nav-dropdown">
             <NavDropdown.Item href="/account">Mes infos</NavDropdown.Item>

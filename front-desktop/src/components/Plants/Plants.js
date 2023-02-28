@@ -40,13 +40,11 @@ function Plants() {
   }
 
   const removePlant = (plantID) => {
-    console.log("hello")
     Api.delete('plants/' + plantID)
       .then(res => {
         getPlantsClient()
       })
       .catch(error => {
-        console.log(error)
       });
   }
 

@@ -4,9 +4,18 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Badge from 'react-bootstrap/Badge';
 
 function PostForPlant({ photo }) {
+
+  const urlPhoto = () => {
+    if(photo.image) {
+      return "http://localhost:8090/upload/" + photo.image
+    } else {
+      return "https://cdn.shopify.com/s/files/1/0004/2654/1108/products/LIVRAISON_PLANTE_GRANDE_MONSTERA_DELICIOSA_2_800x.jpg?v=1622459168"
+    }
+  }
+
   return (
     <Card>
-      <svg className="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+      <img src={urlPhoto()} />
       <Card.Body>
         <Card.Text>Poster par <Badge bg="primary">Antoine</Badge> après avoir gardé la plante.</Card.Text>
         <div className="d-flex justify-content-between align-items-center">
