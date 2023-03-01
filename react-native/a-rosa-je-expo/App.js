@@ -1,6 +1,9 @@
 // import "react-native-gesture-handler";
-import RoutesNavigator from "./routes/myPlantsStack";
+import PlantesNavigator from "./routes/myPlantsStack";
+import RoutesNavigator from './routes/RoutesStack';
 
 export default function App() {
-  return <RoutesNavigator />;
+  return 
+  ( <> <RoutesNavigator />
+      <PlantesNavigator /> </> )
 }
