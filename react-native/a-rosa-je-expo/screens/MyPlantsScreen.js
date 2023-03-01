@@ -41,48 +41,48 @@ export default function MyPlantsScreen({ navigation }) {
   // TODO: get the client id from the user
   const clientId = 8; // testClient
   let myPlantsList = [
-    {
-      id: 9,
-      address: "Owner id 40 address 2nd item",
-      latitude: 22.99,
-      longitude: 33.789,
-      profil_photo: "../assets/testpic.jpeg",
-    },
-    {
-      id: 10,
-      address: "ici",
-      latitude: 22.99,
-      longitude: 33.789,
-      profil_photo: "../assets/testpic.jpeg",
-    },
-    {
-      id: 11,
-      address: "là",
-      latitude: 22.99,
-      longitude: 33.789,
-      profil_photo: "../assets/testpic.jpeg",
-    },
+    // {
+    //   id: 9,
+    //   address: "Owner id 40 address 2nd item",
+    //   latitude: 22.99,
+    //   longitude: 33.789,
+    //   profil_photo: "../assets/testpic.jpeg",
+    // },
+    // {
+    //   id: 10,
+    //   address: "ici",
+    //   latitude: 22.99,
+    //   longitude: 33.789,
+    //   profil_photo: "../assets/testpic.jpeg",
+    // },
+    // {
+    //   id: 11,
+    //   address: "là",
+    //   latitude: 22.99,
+    //   longitude: 33.789,
+    //   profil_photo: "../assets/testpic.jpeg",
+    // },
   ];
 
-  // useEffect(() => {
-  //   try {
-  //     console.log("useEffect: axios: myPLants: IN", clientId);
-  //     // myPlantsList = axios.get(
-  //     //   `http://localhost:8090/plants/client/${clientId}`
-  //     // );
-  //     myPlantsList = [
-  //       {
-  //         id: 9,
-  //         address: "Owner id 40 address 2nd item",
-  //         latitude: 22.99,
-  //         longitude: 33.789,
-  //         profil_photo: "pic2",
-  //       },
-  //     ];
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }, []);
+  useEffect(() => {
+    try {
+      console.log("useEffect: axios: myPLants: IN", clientId);
+      myPlantsList = axios.get(
+        `http://localhost:8090/plants/client/${clientId}`
+      );
+      // myPlantsList = [
+      //   {
+      //     id: 9,
+      //     address: "Owner id 40 address 2nd item",
+      //     latitude: 22.99,
+      //     longitude: 33.789,
+      //     profil_photo: "pic2",
+      //   },
+      // ];
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   if (hasCameraPermission === undefined) {
     return <Text>En attente de permissions...</Text>;
