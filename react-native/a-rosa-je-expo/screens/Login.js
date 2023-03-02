@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
 
-export default function LoginScreen() {
+export default function LoginScreen( { navigation}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,7 +34,9 @@ export default function LoginScreen() {
         value={password}
         secureTextEntry={true}
       />
-       <TouchableOpacity style={styles.button} onPress={handleLogin}>
+       <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('MyPlantsScreen')}>
         <Text style={styles.buttonText}>Se connecter</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleForgotPassword}>
