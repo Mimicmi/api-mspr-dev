@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, ListGroup } from 'react-bootstrap';
+import axios from 'axios';
 
 
 const AddressInput = ({ address, setAddress, latitude, setLatitude, longitude, setLongitude }) => {
@@ -8,9 +9,12 @@ const AddressInput = ({ address, setAddress, latitude, setLatitude, longitude, s
 
   const handleChange = async (event) => {
     setAddress(event.target.value);
-    const response = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${event.target.value}&limit=6`);
-    const data = await response.json();
-    setSuggestions(data.features);
+
+    if(event.target.value.length >= 4 ) {
+      const response = await axios.get(`https://api-adresse.data.gouv.fr/search/?q=${event.target.value}&limit=6`);
+      setSuggestions(response.data.features);
+    }
+    
   }
 
   const handleSelect = (suggestion) => {

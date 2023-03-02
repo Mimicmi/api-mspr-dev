@@ -59,7 +59,7 @@ function Annonces() {
       <div className="text-center">
         <div className='mt-5 mb-2'>
           <Button variant="light" >{title}</Button>
-          <Button href='/annonce/add' variant="outline-primary">Ajouter une annonces</Button>
+          <Button href='/annonce/add' variant="outline-primary">Ajouter une annonce</Button>
         </div>
 
 

@@ -7,6 +7,8 @@ import Alert from 'react-bootstrap/Alert';
 import { UserContext } from '../../services/UserService'
 import { useNavigate } from 'react-router-dom';
 
+import account from "../../assets/img/account.png"
+
 function Login() {
   const navigate = useNavigate();
 
@@ -105,14 +107,14 @@ function Login() {
   return (
     <main class="form-signin">
 
-      <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
+      <img class="mb-4" src={account} alt="" width="72" height="57" />
       <h1 class="h3 mb-3 fw-normal">Connectez-vous</h1>
 
       <div>{error}</div>
       <div>
         <div class="form-floating">
           <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value={email} onChange={(event) => setEmail(event.target.value)} />
-          <label for="floatingInput">Adresse mail</label>
+          <label for="floatingInput">Adresse email</label>
         </div>
 
         <div class="form-floating">

@@ -64,7 +64,7 @@ function NavbarMenu() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="secondary" variant="secondary">
       <Container>
-        <Navbar.Brand href="/" className='nom-projet'>Arrosa-je</Navbar.Brand>
+        <Navbar.Brand href="/" className='nom-projet'>A-rosa-je</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto"></Nav>

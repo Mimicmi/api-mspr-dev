@@ -11,6 +11,9 @@ import { UserContext } from '../../services/UserService'
 
 import { Navigate } from "react-router-dom";
 
+import account from "../../assets/img/account.png"
+
+
 
 function SignIn() {
 
@@ -136,13 +139,13 @@ function SignIn() {
                     <div>
                         {alert}
                         <div class="form-floating">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value={email} onChange={(event) => setEmail(event.target.value)} />
-                            <label for="floatingInput">Adresse mail</label>
+                            <input type="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com" value={email} onChange={(event) => setEmail(event.target.value)} />
+                            <label for="floatingInputEmail">Adresse email</label>
                         </div>
 
                         <div class="form-floating">
-                            <input onChange={(event) => setPseudo(event.target.value)} type="text" value={pseudo} class="form-control" id="floatingInput" placeholder="Pseudo" />
-                            <label for="floatingInput">Pseudo</label>
+                            <input onChange={(event) => setPseudo(event.target.value)} type="text" value={pseudo} class="form-control" id="floatingInputPseudo" placeholder="Pseudo" />
+                            <label for="floatingInputPseudo">Pseudo</label>
                         </div>
 
                         <div class="form-floating">
@@ -216,7 +219,7 @@ function SignIn() {
     return (
         <main class="form-signin">
             <form>
-                <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
+                <img class="mb-4" src={account} alt="" width="72" height="57" />
                 <h1 class="h3 mb-3 fw-normal">Créer un compte</h1>
 
                 {renderSwitch()}
