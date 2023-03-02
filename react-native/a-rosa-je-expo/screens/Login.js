@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Image,
+} from "react-native";
 
-export default function LoginScreen( { navigation}) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+export default function LoginScreen({ navigation }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = () => {
     // Faire quelque chose avec les informations de connexion
@@ -12,13 +19,12 @@ export default function LoginScreen( { navigation}) {
 
   const handleForgotPassword = () => {
     // Naviguer vers la page pour réinitialiser le mot de passe
-    console.log('Mot de passe oublié');
+    console.log("Mot de passe oublié");
   };
 
   return (
     <View style={styles.container}>
-    <Image 
-        style={styles.image} source={require('../assets/logo.png')} />
+      <Image style={styles.image} source={require("../assets/logo.png")} />
       <Text style={styles.title}>Connexion</Text>
       <TextInput
         style={styles.input}
@@ -34,10 +40,11 @@ export default function LoginScreen( { navigation}) {
         value={password}
         secureTextEntry={true}
       />
-       <TouchableOpacity
+      <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('MyPlantsScreen')}>
-        <Text style={styles.buttonText}>Se connecter</Text>
+        onPress={() => navigation.navigate("MyPlants")}
+      >
+        <Text style={styles.buttonText}>Se connecter ici</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleForgotPassword}>
         <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>
@@ -49,9 +56,9 @@ export default function LoginScreen( { navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ecf0f1",
   },
 
   image: {
@@ -65,18 +72,18 @@ const styles = StyleSheet.create({
     height: 44,
     padding: 10,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: "black",
     marginBottom: 10,
   },
 
   button: {
-    backgroundColor: '#87CEEB',
+    backgroundColor: "#87CEEB",
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
   },
   forgotPassword: {
-    color: 'blue',
-    textDecorationLine: 'underline',
+    color: "blue",
+    textDecorationLine: "underline",
   },
 });
