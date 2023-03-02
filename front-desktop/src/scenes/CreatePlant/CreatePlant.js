@@ -46,7 +46,8 @@ const CreatePlant = () => {
       "address": address,
       "profil_photo": profilPhoto,
       "longitude": latitude,
-      "latitude": longitude
+      "latitude": longitude,
+      "label" : name
     };
     const result = await Api.post('plants', data);
     return result.data;

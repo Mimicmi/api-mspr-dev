@@ -27,8 +27,8 @@ function ResumePlant({plant}) {
                 <Table hover>
                     <tbody>
                         <tr>
-                            <td>Nom</td>
-                            <td>Votre Plante {plant.id}</td>
+                            <td>Votre Plante </td>
+                            <td>{plant.label}</td>
                         </tr>
                         <tr>
                             <td>Adresse</td>

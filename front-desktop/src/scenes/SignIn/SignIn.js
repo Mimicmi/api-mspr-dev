@@ -1,5 +1,7 @@
 import '../Login/Login.css';
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 import Api from '../../Api';
 
@@ -19,6 +21,8 @@ function SignIn() {
 
     const [error, setError] = useState(false);
     const { updateJwt, updateRole } = useContext(UserContext);
+    const navigate = useNavigate();
+
 
 
     const loginAccount = async (id_user) => {
@@ -212,7 +216,9 @@ function SignIn() {
                 );
 
             case steps.Success:
-                    return <Navigate replace to="/" />
+                updateRole(null)
+                updateJwt(null)
+                navigate("/login")
         }
     }
 

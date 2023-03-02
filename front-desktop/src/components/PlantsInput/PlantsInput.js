@@ -29,7 +29,7 @@ const PlantsInput = ({ plant, setPlant }) => {
                 <Form.Select value={plant} onChange={(event) => setPlant(event.target.value)}>
                     <option value="" disabled>Selectionner plante(s)</option>
                     {plants.map(specieOneByOne => (
-                        <option value={specieOneByOne.id}>{specieOneByOne.address}</option>
+                        <option value={specieOneByOne.id}>{specieOneByOne.label}</option>
                     ))}
                 </Form.Select>
             </Form.Group>

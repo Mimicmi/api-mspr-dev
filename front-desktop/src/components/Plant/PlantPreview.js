@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 
 function PlantPreview({ item, onRemovePlant }) {
 
+  console.log(item)
 
   const urlPhoto = () => {
     if(item.profil_photo) {
@@ -25,7 +26,7 @@ function PlantPreview({ item, onRemovePlant }) {
 
               <div className="media-body col-lg-6  col-sm-12">
                 <h6 className="media-title font-weight-semibold mb-lg-3 col-12">
-                  <a href={'my-plant/' + item.id } data-abc="true">My Plantos name</a>
+                  <a href={'my-plant/' + item.id } data-abc="true">{item.label}</a>
                 </h6>
 
                 <Badge pill bg="primary" className="mb-3 mb-lg-4">

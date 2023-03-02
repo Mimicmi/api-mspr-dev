@@ -29,7 +29,12 @@ function NavbarMenu() {
         return(<>
           <Nav.Link href="/post">Publications</Nav.Link>
           <Nav.Link href="/species">Espèces</Nav.Link>
-          <Nav.Link onClick={logout}>Déconnexion</Nav.Link>
+          
+
+          <NavDropdown title="Mon profil" id="collasible-nav-dropdown">
+            <NavDropdown.Item href="/account">Mes infos</NavDropdown.Item>
+            <NavDropdown.Item onClick={logout}>Déconnexion</NavDropdown.Item>
+          </NavDropdown>
           </>
         );
       case "ROLE_CLIENT":
