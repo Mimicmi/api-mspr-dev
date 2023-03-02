@@ -123,7 +123,7 @@ export default function CameraScreen({ navigation }) {
       <Text style={styles.text}>{navigation.getParam("id")}</Text>
       <Text style={styles.text}>{navigation.getParam("adress")}</Text>
       <Text style={styles.text}>
-        {navigation.getParam("latitude")} & {navigation.getParam(latitude)}
+        {/* {navigation.getParam("latitude")} & {navigation.getParam(latitude)} */}
       </Text>
       <Camera style={styles.container} ref={cameraRef} />
       <TouchableOpacity style={styles.cancelButton} onPress={gotoMyPlants}>

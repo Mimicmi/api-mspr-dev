@@ -22,11 +22,34 @@ export default function MyPlantsScreen({ navigation }) {
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [photo, setPhoto] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [comment, setComment] = useState("");
-
-  const openCamera = () => {
-    navigation.navigate("Camera");
-  };
+  // const [comment, setComment] = useState("");
+  const [myPlantsList, setMyPlantsList] = useState([
+    {
+      id: 9,
+      address: "Owner id 40 address 2nd item",
+      latitude: 22.99,
+      longitude: 33.789,
+      profil_photo: "../assets/testpic.jpeg",
+    },
+    {
+      id: 10,
+      address: "ici",
+      latitude: 22.99,
+      longitude: 33.789,
+      profil_photo: "../assets/testpic.jpeg",
+    },
+    {
+      id: 11,
+      address: "là",
+      latitude: 22.99,
+      longitude: 33.789,
+      profil_photo: "../assets/testpic.jpeg",
+    },
+  ]);
+  console.log("myPlantsList", myPlantsList, navigation);
+  // const openCamera = () => {
+  //   navigation.navigate("Camera");
+  // };
 
   useEffect(() => {
     (async () => {
@@ -40,36 +63,38 @@ export default function MyPlantsScreen({ navigation }) {
 
   // TODO: get the client id from the user
   const clientId = 8; // testClient
-  let myPlantsList = [
-    // {
-    //   id: 9,
-    //   address: "Owner id 40 address 2nd item",
-    //   latitude: 22.99,
-    //   longitude: 33.789,
-    //   profil_photo: "../assets/testpic.jpeg",
-    // },
-    // {
-    //   id: 10,
-    //   address: "ici",
-    //   latitude: 22.99,
-    //   longitude: 33.789,
-    //   profil_photo: "../assets/testpic.jpeg",
-    // },
-    // {
-    //   id: 11,
-    //   address: "là",
-    //   latitude: 22.99,
-    //   longitude: 33.789,
-    //   profil_photo: "../assets/testpic.jpeg",
-    // },
-  ];
+  // setMyPlantsList([
+  //   {
+  //     id: 9,
+  //     address: "Owner id 40 address 2nd item",
+  //     latitude: 22.99,
+  //     longitude: 33.789,
+  //     profil_photo: "../assets/testpic.jpeg",
+  //   },
+  //   {
+  //     id: 10,
+  //     address: "ici",
+  //     latitude: 22.99,
+  //     longitude: 33.789,
+  //     profil_photo: "../assets/testpic.jpeg",
+  //   },
+  //   {
+  //     id: 11,
+  //     address: "là",
+  //     latitude: 22.99,
+  //     longitude: 33.789,
+  //     profil_photo: "../assets/testpic.jpeg",
+  //   },
+  // ]);
 
   useEffect(() => {
     try {
       console.log("useEffect: axios: myPLants: IN", clientId);
-      myPlantsList = axios.get(
-        `http://localhost:8090/plants/client/${clientId}`
-      );
+      axios
+        .get(`http://localhost:8090/plants/client/${clientId}`)
+        .then((response) => {
+          setMyPlantsList(response.data);
+        });
       // myPlantsList = [
       //   {
       //     id: 9,
@@ -96,13 +121,14 @@ export default function MyPlantsScreen({ navigation }) {
   }
 
   return (
-    <View style={{ felx: 1 }}>
+    <View style={{ flex: 1 }}>
       {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}> */}
       {myPlantsList.length === 0 && <NoPlants />}
       {myPlantsList.length > 0 && (
         <HasPlants
           myPlantsList={myPlantsList}
           hasCameraPermission={hasCameraPermission}
+          navigation={navigation}
         />
       )}
 
@@ -121,9 +147,11 @@ const NoPlants = () => {
 };
 
 const HasPlants = (props) => {
-  const { myPlantsList, hasCameraPermission } = props;
+  const { myPlantsList, hasCameraPermission, navigation } = props;
   console.log("HasPlants: myPlantsList", myPlantsList);
-  const renderPlant = ({ item }) => <MyPlant plant={item} />;
+  const renderPlant = ({ item }) => (
+    <MyPlant plant={item} navigation={navigation} />
+  );
 
   return (
     <View>
@@ -140,12 +168,12 @@ const HasPlants = (props) => {
 };
 
 const MyPlant = (props) => {
-  const { plant } = props;
+  const { plant, navigation } = props;
   console.log("MyPlant: props", plant);
   return (
     <TouchableOpacity
       style={{ width: "50%", padding: 10 }}
-      onPress={() => navigation.navigate("Camera", { plant })}
+      onPress={() => navigation.navigate("Camera", { plantId: plant.id })}
       // onPress={() => console.log(plant.id)}
     >
       {/* <View style={styles.card}> */}

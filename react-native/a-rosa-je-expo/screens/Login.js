@@ -44,7 +44,7 @@ export default function LoginScreen({ navigation }) {
         style={styles.button}
         onPress={() => navigation.navigate("MyPlants")}
       >
-        <Text style={styles.buttonText}>Se connecter ici</Text>
+        <Text style={styles.buttonText}>Se connecter</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleForgotPassword}>
         <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>
