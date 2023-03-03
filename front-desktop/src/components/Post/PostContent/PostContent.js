@@ -57,7 +57,7 @@ function PostContent({ handleComment, photo }) {
                         </a>
 
                         <a href={"/my-plant/" + photo.plant.id} className="text-dark mb-0">
-                            (My plantos {photo.plant.name})
+                            ({photo.plant.name})
                         </a>
 
                         <a className="text-muted d-block" style={{ marginTop: "-6px" }}>
@@ -101,7 +101,7 @@ function PostContent({ handleComment, photo }) {
 
         )
     } else {
-        return <p>Publication supprimer</p>
+        return <p>Publication supprimée</p>
     }
 }
 export default PostContent;

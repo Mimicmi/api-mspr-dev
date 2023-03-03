@@ -69,7 +69,7 @@ public class PhotoController {
 
             Map<String, Object> plantInfo = new HashMap<>();
             plantInfo.put("id", photo.getPlant().getId());
-            plantInfo.put("name", photo.getPlant().getId());
+            plantInfo.put("name", photo.getPlant().getLabel());
 
             response.put("plant", plantInfo);
 
