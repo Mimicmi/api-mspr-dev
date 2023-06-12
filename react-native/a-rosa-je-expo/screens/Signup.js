@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, } from 'react-native';
+import axios from 'axios';
 
 
 
 export default function SignupForm() {
-  const [nom, setNom] = useState('');
+  const [pseudo, setPseudo] = useState('');
   const [prenom, setPrenom] = useState('');
   const [dateNaissance, setDateNaissance] = useState('');
   const [adresse, setAdresse] = useState('');
@@ -13,12 +14,28 @@ export default function SignupForm() {
   const [confirmMotDePasse, setConfirmMotDePasse] = useState('');
 
   
-  const handleSignupPress = () => {
-    // verif après crée les champs
-    if (nom && prenom && dateNaissance && adresse && motDePasse && confirmMotDePasse) {
+  const handleSignupPress = async () => {
+    console.log("handleSignupPress in");
+    if (pseudo && email && motDePasse && confirmMotDePasse) {
+      console.log("if 1 in ");
       if (motDePasse === confirmMotDePasse) {
-        alert('Compte créé avec succès !');
-        // Code pour créer le compte ici
+        console.log("if 2 in ");
+        try {
+          console.log("if 5 in");
+          const response = await axios.post('http://localhost:8090/users', {
+            pseudo,
+            email,
+            password: motDePasse
+          });
+          console.log("if 4 in");
+          console.log(response.data); // Affiche la réponse de l'API (facultatif)
+          console.log("if 3 in");
+          alert('Compte créé avec succès !');
+          // Effectuez ici les actions nécessaires après la création du compte
+        } catch (error) {
+          console.error(error);
+          alert('Une erreur s\'est produite lors de la création du compte.');
+        }
       } else {
         alert('Les mots de passe ne correspondent pas.');
       }
@@ -26,16 +43,16 @@ export default function SignupForm() {
       alert('Veuillez remplir tous les champs.');
     }
   };
-
+  
   return (
 
     <View style={styles.container}>
       <Text style={styles.heading}>Créer un compte</Text>
       <TextInput
         style={styles.input}
-        placeholder="Nom"
-        value={nom}
-        onChangeText={setNom}
+        placeholder="pseudo"
+        value={pseudo}
+        onChangeText={setPseudo}
       />
       <TextInput
         style={styles.input}
