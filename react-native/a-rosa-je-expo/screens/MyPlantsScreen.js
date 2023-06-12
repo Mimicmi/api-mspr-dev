@@ -40,34 +40,36 @@ export default function MyPlantsScreen({ navigation }) {
 
   // TODO: get the client id from the user
   const clientId = 8; // testClient
-  let myPlantsList = [
-    // {
-    //   id: 9,
-    //   address: "Owner id 40 address 2nd item",
-    //   latitude: 22.99,
-    //   longitude: 33.789,
-    //   profil_photo: "../assets/testpic.jpeg",
-    // },
-    // {
-    //   id: 10,
-    //   address: "ici",
-    //   latitude: 22.99,
-    //   longitude: 33.789,
-    //   profil_photo: "../assets/testpic.jpeg",
-    // },
-    // {
-    //   id: 11,
-    //   address: "là",
-    //   latitude: 22.99,
-    //   longitude: 33.789,
-    //   profil_photo: "../assets/testpic.jpeg",
-    // },
-  ];
+  console.log("MyPlantsScreen: clientId", clientId);
+  const [myPlantsList, setMyPlantsList] = useState([]);
+  // let myPlantsList = [
+  //   {
+  //     id: 9,
+  //     address: "Owner id 40 address 2nd item",
+  //     latitude: 22.99,
+  //     longitude: 33.789,
+  //     profil_photo: "../assets/testpic.jpeg",
+  //   },
+  //   {
+  //     id: 10,
+  //     address: "ici",
+  //     latitude: 22.99,
+  //     longitude: 33.789,
+  //     profil_photo: "../assets/testpic.jpeg",
+  //   },
+  //   {
+  //     id: 11,
+  //     address: "là",
+  //     latitude: 22.99,
+  //     longitude: 33.789,
+  //     profil_photo: "../assets/testpic.jpeg",
+  //   },
+  // ];
 
-  useEffect(() => {
+  useEffect(async () => {
     try {
       console.log("useEffect: axios: myPLants: IN", clientId);
-      myPlantsList = axios.get(
+      const response = await axios.get(
         `http://localhost:8090/plants/client/${clientId}`
       );
       // myPlantsList = [
@@ -79,6 +81,8 @@ export default function MyPlantsScreen({ navigation }) {
       //     profil_photo: "pic2",
       //   },
       // ];
+      setMyPlantsList(response.data);
+      console.log("useEffect: axios: myPLants: OUT", myPlantsList);
     } catch (error) {
       console.error(error);
     }
@@ -96,7 +100,7 @@ export default function MyPlantsScreen({ navigation }) {
   }
 
   return (
-    <View style={{ felx: 1 }}>
+    <View style={{ flex: 1 }}>
       {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}> */}
       {myPlantsList.length === 0 && <NoPlants />}
       {myPlantsList.length > 0 && (
@@ -139,8 +143,8 @@ const HasPlants = (props) => {
   );
 };
 
-const MyPlant = (props) => {
-  const { plant } = props;
+const MyPlant = ({ navigation, plant }) => {
+  // const { plant } = props;
   console.log("MyPlant: props", plant);
   return (
     <TouchableOpacity
@@ -224,8 +228,8 @@ const styles = StyleSheet.create({
     // width: "40%",
     // alignSelf: "stretch",
   },
-  // columnn: {
-  //   flexDirection: "columnn",
+  // column: {
+  //   flexDirection: "column",
   //   alignItems: "center",
   //   marginBottom: 5,
   //   backgroundColor: "orange",
