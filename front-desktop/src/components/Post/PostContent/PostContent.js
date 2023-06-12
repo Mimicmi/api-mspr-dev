@@ -94,11 +94,10 @@ function PostContent({ handleComment, photo }) {
                             </a>
                         </div>
                         <div>
-                            <a onClick={() => handleComment()} className="text-muted"> 8 comments </a>
+                            <a onClick={() => handleComment()} className="text-muted"> + comments </a>
                         </div>
                     </div>
                 </div></>
-
         )
     } else {
         return <p>Publication supprimée</p>

@@ -2,7 +2,7 @@ package com.mspr.arosaje.controller;
 
 import java.util.List;
 import java.util.Optional;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -114,11 +114,24 @@ public class PlantController {
     public ResponseEntity<?> getClientPlants(@PathVariable("id") int id) {
         Optional<Client> clientData = clientRepository.findById(id);
         List<Plant> plantData = plantRepository.findByClientId(clientData.get().getId());
+        List<PlantDto> dtoList = new ArrayList<>();
 
         if(!clientData.isPresent()) {
             return new ResponseEntity<>(plantData, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(plantData, HttpStatus.OK);
+        for(Plant plant : plantData){
+            PlantDto dto = new PlantDto();
+            dto.setId(plant.getId());
+            dto.setAddress(plant.getAddress());
+            dto.setLatitude(plant.getLatitude());
+            dto.setLongitude(plant.getLongitude());
+            dto.setProfil_photo(plant.getProfil_photo());
+            dto.setLabel(plant.getLabel());
+            dto.setSpecie(plant.getSpecie().getSpecie());
+            dtoList.add(dto);
+        }
+
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 }

@@ -1,7 +1,9 @@
 package com.mspr.arosaje.controller;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,8 +57,7 @@ public class CommentController {
     @PostMapping("comments")
     public ResponseEntity<HttpStatus> createComment(@RequestBody Comment comment) {
         Optional<Photo> photoData = photoRepository.findById(comment.getPhoto().getId());
-        Optional<Maintenance> maintenanceData = maintenanceRepository.findById(comment.getMaintenance().getId());
-        if (!photoData.isPresent() || !maintenanceData.isPresent()) {
+        if (!photoData.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
             commentRepository.save(comment);
@@ -73,7 +74,6 @@ public class CommentController {
         }
         Comment _comment = commentData.get();
         _comment.setPhoto(comment.getPhoto());
-        _comment.setMaintenance(comment.getMaintenance());
         _comment.setComment(comment.getComment());
         return new ResponseEntity<>(commentRepository.save(_comment), HttpStatus.OK);
     }
@@ -87,4 +87,25 @@ public class CommentController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+
+    @GetMapping("/comments/photo/{id}")
+    public ResponseEntity<List<CommentResponse>> getCommentsByPhotoId(@PathVariable("id") int id) {
+        List<Comment> comments = commentRepository.findCommentsByPhotoId(id);
+
+        // mapper les commentaires aux réponses
+        List<CommentResponse> commentResponses = comments.stream().map(comment -> {
+            CommentResponse response = new CommentResponse();
+            response.setUser(comment.getUser().getPseudo());
+            response.setTextBody(comment.getComment());
+            response.setDate(comment.getCommentDate());
+            response.setIdUser(comment.getUser().getId());
+            return response;
+        }).sorted(Comparator.comparing(CommentResponse::getDate).reversed()) // Tri par date dans l'ordre décroissant
+        .collect(Collectors.toList());
+
+        return new ResponseEntity<>(commentResponses, HttpStatus.OK);
+    }
 }
+
+

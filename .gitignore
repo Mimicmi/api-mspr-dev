@@ -2,3 +2,5 @@
 .vscode/
 HELP.md
 target/
+
+/back/public/upload/

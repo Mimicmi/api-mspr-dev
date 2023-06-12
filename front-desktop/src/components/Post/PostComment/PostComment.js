@@ -1,127 +1,118 @@
-import React, { useState, useContext} from 'react';
+import Api from '../../../Api';
+
+import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../../services/UserService';
 
+function PostComment({ photo_id }) {
 
-function PostComment() {
-
-    const { role } = useContext(UserContext);
+    const { userId } = useContext(UserContext);
 
 
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [comments, setComments] = useState([]);
+
+    const [commentToSend, setCommentToSend] = useState("");
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        sendComment();
+    }
+
+    useEffect(() => {
+        getComments()
+    }, [photo_id])
+
+
+    const getComments = () => {
+        Api.get('/comments/photo/' + photo_id)
+            .then(res => res.data)
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setComments(result);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    console.log(error)
+                }
+            )
+    }
+
+    const sendComment = () => {
+        const body = {
+            "photo": {
+                "id": photo_id
+            },
+            "user": {
+                "id": userId
+            },
+            "commentDate": new Date().toISOString(),
+            "comment": commentToSend
+        }
+
+        Api.post('/comments', body)
+            .then(res => res.data)
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setComments([...comments, result]);
+                    setCommentToSend('');
+
+                    getComments();
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    console.log(error);
+                }
+            )
+    }
 
     const formContent = () => {
-
-        if(role == "ROLE_BOTANIST") {
-            return (<div className="d-flex mb-3">
-            <a href="">
-                <img src='https://mdbcdn.b-cdn.net/img/new/avatars/18.webp' className="border rounded-circle me-2"
-                    alt="Avatar" style={{ height: "40px" }} />
-            </a>
-            <div className="form-outline w-100">
-                <textarea className="form-control" id="textAreaExample" rows="2"></textarea>
-                <label className="form-label" htmlFor="textAreaExample">Write a comment</label>
-            </div>
-        </div>)
-        }
+        return (
+            <form onSubmit={handleSubmit}>
+                <div className="d-flex mb-3">
+                    <div className="form-outline w-100 d-flex gap-2">
+                        <textarea className="form-control" id="textAreaExample" rows="2" value={commentToSend} onChange={e => setCommentToSend(e.target.value)}></textarea>
+                        <button class="btn btn-outline-primary" type="submit">Evnoyer</button>
+                    </div>
+                </div>
+            </form>
+        )
     }
 
     return (
         <div>
-
             {formContent()}
-
-            <div className="d-flex mb-3">
-                <a href="">
-                    <img src='https://mdbcdn.b-cdn.net/img/new/avatars/8.webp' className="border rounded-circle me-2"
-                        alt="Avatar" style={{ height: "40px" }} />
-                </a>
-                <div>
-                    <div className="bg-light rounded-3 px-3 py-1">
-                        <a href="" className="text-dark mb-0">
-                            <strong>Malcolm Dosh</strong>
-                        </a>
-                        <a href="" className="text-muted d-block">
-                            <small>Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Natus, aspernatur!</small>
-                        </a>
+            {Array.isArray(comments) && comments.map((comment, index) => {
+                return (
+                    <div className={`d-flex mb-3 ${userId == comment.idUser ? 'justify-content-end' : ''}`} key={index} style={userId == comment.idUser ? { justifyContent: "flex-end" } : {}}>
+                        {!(userId == comment.idUser) && (
+                            <a>
+                                <img
+                                    src="https://cdn.onlinewebfonts.com/svg/img_569204.png"
+                                    className="border rounded-circle me-2"
+                                    alt="Avatar"
+                                    style={{ height: "30px" }}
+                                />
+                            </a>
+                        )}
+                        <div>
+                            <div className="bg-light rounded-3 px-3 py-1">
+                                {!(userId == comment.idUser) && (
+                                    <p className="text-dark mb-0">
+                                        <strong>{comment.user}</strong>
+                                    </p>
+                                )}
+                                <p className="text-muted d-block">
+                                    <small>{comment.textBody}</small>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <a href="" className="text-muted small ms-3 me-2"><strong>Like</strong></a>
-                    <a href="" className="text-muted small me-2"><strong>Reply</strong></a>
-                </div>
-            </div>
-
-            <div className="d-flex mb-3">
-                <a href="">
-                    <img src='https://mdbcdn.b-cdn.net/img/new/avatars/5.webp' className="border rounded-circle me-2"
-                        alt="Avatar" style={{ height: "40px" }} />
-                </a>
-                <div>
-                    <div className="bg-light rounded-3 px-3 py-1">
-                        <a href="" className="text-dark mb-0">
-                            <strong>Rhia Wallis</strong>
-                        </a>
-                        <a href="" className="text-muted d-block">
-                            <small>Et tempora ad natus autem enim a distinctio
-                                quaerat asperiores necessitatibus commodi dolorum
-                                nam perferendis labore delectus, aliquid placeat
-                                quia nisi magnam.</small>
-                        </a>
-                    </div>
-                    <a href="" className="text-muted small ms-3 me-2"><strong>Like</strong></a>
-                    <a href="" className="text-muted small me-2"><strong>Reply</strong></a>
-                </div>
-            </div>
-
-            <div className="d-flex mb-3">
-                <a href="">
-                    <img src='https://mdbcdn.b-cdn.net/img/new/avatars/6.webp' className="border rounded-circle me-2"
-                        alt="Avatar" style={{ height: "40px" }} />
-                </a>
-                <div>
-                    <div className="bg-light rounded-3 px-3 py-1">
-                        <a href="" className="text-dark mb-0">
-                            <strong>Marcie Mcgee</strong>
-                        </a>
-                        <a href="" className="text-muted d-block">
-                            <small>
-                                Officia asperiores autem sit rerum architecto a
-                                deserunt doloribus obcaecati, velit ab at, ad
-                                delectus sapiente! Voluptatibus quaerat suscipit
-                                in nostrum necessitatibus illum nemo quo beatae
-                                obcaecati quidem optio fugit ipsam distinctio,
-                                illo repellendus porro sequi alias perferendis ea
-                                soluta maiores nisi eligendi? Mollitia debitis
-                                quam ex, voluptates cupiditate magnam
-                                fugiat.</small>
-                        </a>
-                    </div>
-                    <a href="" className="text-muted small ms-3 me-2"><strong>Like</strong></a>
-                    <a href="" className="text-muted small me-2"><strong>Reply</strong></a>
-                </div>
-            </div>
-
-            <div className="d-flex mb-3">
-                <a href="">
-                    <img src='https://mdbcdn.b-cdn.net/img/new/avatars/10.webp' className="border rounded-circle me-2"
-                        alt="Avatar" style={{ height: "40px" }} />
-                </a>
-                <div>
-                    <div className="bg-light rounded-3 px-3 py-1">
-                        <a href="" className="text-dark mb-0">
-                            <strong>Hollie James</strong>
-                        </a>
-                        <a href="" className="text-muted d-block">
-                            <small>Voluptatibus quaerat suscipit in nostrum
-                                necessitatibus</small>
-                        </a>
-                    </div>
-                    <a href="" className="text-muted small ms-3 me-2"><strong>Like</strong></a>
-                    <a href="" className="text-muted small me-2"><strong>Reply</strong></a>
-                </div>
-            </div>
-
-
+                )
+            })}
         </div>
     )
-
 }
+
 export default PostComment;

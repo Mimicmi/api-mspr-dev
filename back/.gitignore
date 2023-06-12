@@ -40,3 +40,5 @@ spring-boot-bootcamp-resources-main/
 
 ### Application Properties ###
 src/main/resources/application.properties
+
+src/public/upload/

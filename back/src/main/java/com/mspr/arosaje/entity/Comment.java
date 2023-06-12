@@ -1,23 +1,18 @@
 package com.mspr.arosaje.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.*;
+import java.util.Date;
+
 @Entity
 @Table(name = "comments")
 public class Comment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -27,20 +22,25 @@ public class Comment {
     private Photo photo;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "maintenance_id")
+    @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Maintenance maintenance;
+    private User user;
+
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date commentDate;
 
     private String comment;
-
+    
     public Comment() {
     }
 
-    public Comment(int id, Photo photo, Maintenance maintenance, String comment) {
+    public Comment(int id, Photo photo, User user, Date commentDate, String comment) {
         this.id = id;
         this.photo = photo;
-        this.maintenance = maintenance;
+        this.user = user;
+        this.commentDate = commentDate;
         this.comment = comment;
     }
 
@@ -60,14 +60,6 @@ public class Comment {
         this.photo = photo;
     }
 
-    public Maintenance getMaintenance() {
-        return this.maintenance;
-    }
-
-    public void setMaintenance(Maintenance maintenance) {
-        this.maintenance = maintenance;
-    }
-
     public String getComment() {
         return this.comment;
     }
@@ -76,4 +68,19 @@ public class Comment {
         this.comment = comment;
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
+    public Date getCommentDate() {
+        return this.commentDate;
+    }
+
+    public void setCommentDate(Date commentDate) {
+        this.commentDate = commentDate;
+    }
 }

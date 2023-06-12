@@ -5,8 +5,6 @@ import Button from 'react-bootstrap/Button';
 
 function PlantPreview({ item, onRemovePlant }) {
 
-  console.log(item)
-
   const urlPhoto = () => {
     if(item.profil_photo) {
       return "http://localhost:8090/upload/" + item.profil_photo
@@ -30,7 +28,7 @@ function PlantPreview({ item, onRemovePlant }) {
                 </h6>
 
                 <Badge pill bg="primary" className="mb-3 mb-lg-4">
-                  Espece
+                  {item.specie}
                 </Badge>
 
                 <p className="mb-3">Conseille d'utilisation | TIPS | Dans le doute, mieux vaut ne pas arroser assez que trop </p>

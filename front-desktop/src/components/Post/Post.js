@@ -16,6 +16,7 @@ function Post({ photo }) {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [item, setItem] = useState();
 
+
 	useEffect(() => {
 		Api.get('photosCustom/' + photo.id)
 			.then(res => res.data)
@@ -37,7 +38,7 @@ function Post({ photo }) {
 	const commentView = () => {
 		if (commentShow) {
 			return (
-				<PostComment></PostComment>
+				<PostComment photo_id={photo.id}></PostComment>
 			)
 		}
 	}
