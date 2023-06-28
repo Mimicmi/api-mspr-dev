@@ -13,25 +13,19 @@ export default function SignupForm() {
   const [motDePasse, setMotDePasse] = useState('');
   const [confirmMotDePasse, setConfirmMotDePasse] = useState('');
 
-  
+
   const handleSignupPress = async () => {
-    console.log("handleSignupPress in");
+    const user = {
+      email: 'votre_email',
+      password: 'votre_mot_de_passe',
+      pseudo: 'votre_pseudo'
+    }
     if (pseudo && email && motDePasse && confirmMotDePasse) {
-      console.log("if 1 in ");
       if (motDePasse === confirmMotDePasse) {
-        console.log("if 2 in ");
         try {
-          console.log("if 5 in");
-          const response = await axios.post('http://localhost:8090/users', {
-            pseudo,
-            email,
-            password: motDePasse
-          });
-          console.log("if 4 in");
-          console.log(response.data); // Affiche la réponse de l'API (facultatif)
-          console.log("if 3 in");
+          const response = await axios.post('http://localhost:3000/users', user);
+          console.log(response.data);
           alert('Compte créé avec succès !');
-          // Effectuez ici les actions nécessaires après la création du compte
         } catch (error) {
           console.error(error);
           alert('Une erreur s\'est produite lors de la création du compte.');
@@ -137,3 +131,4 @@ const styles = StyleSheet.create({
   },
 
 });
+

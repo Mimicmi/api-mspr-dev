@@ -11,17 +11,51 @@ import {
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleLogin = () => {
-    // Faire quelque chose avec les informations de connexion
-    console.log(`Nom d'utilisateur: ${username}, Mot de passe: ${password}`);
+  /*test de connexion avec des données en dure*/
+
+ /* const handleLogin = () => {
+    if (username ==="test" && password === "mdp") {
+        console.log("connexion réussite");
+        navigation.navigate("MyPlants");
+      } else {
+        console.log("connexion échouée");
+      }
+  };
+  const handleForgotPassword = () => {
+    console.log("Mot de passe oublié");
+  };*/ 
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+
+      if (response.ok) {
+        navigation.navigate('MyPlants');
+      } else {
+        setErrorMessage("Nom d'utilisateur ou mot de passe incorrect");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la connexion :", error);
+    }
   };
 
+  /* c'est juste pour faire beau XD  et pour que ça fonctionn en bas*/
   const handleForgotPassword = () => {
-    // Naviguer vers la page pour réinitialiser le mot de passe
     console.log("Mot de passe oublié");
   };
 
+  
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require("../assets/logo.png")} />
@@ -42,7 +76,8 @@ export default function LoginScreen({ navigation }) {
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("MyPlants")}
+        /*onPress={() => navigation.navigate("MyPlants")}*/
+        onPress={handleLogin} 
       >
         <Text style={styles.buttonText}>Se connecter ici</Text>
       </TouchableOpacity>
