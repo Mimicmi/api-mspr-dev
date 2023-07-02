@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 export default function LoginScreen({ navigation }) {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -29,26 +29,28 @@ export default function LoginScreen({ navigation }) {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://localhost:3000/', {
-        method: 'POST',
+      const response = await fetch(`http://localhost:3000/users`, {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
       });
 
       if (response.status === 200) {
-        navigation.navigate('MyPlants');
+        const user = await response.json();
+        if (user.password === password) {
+          navigation.navigate("MyPlants");
+        } else {
+          setErrorMessage("Mot de passe incorrect");
+        }
       } else {
-        setErrorMessage("Nom d'utilisateur ou mot de passe incorrect");
+        setErrorMessage("Adresse e-mail invalide");
       }
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
     }
   };
+
 
   /* c'est juste pour faire beau XD  et pour que ça fonctionn en bas*/
   const handleForgotPassword = () => {
@@ -63,8 +65,8 @@ export default function LoginScreen({ navigation }) {
       <TextInput
         style={styles.input}
         placeholder="Nom d'utilisateur"
-        onChangeText={setUsername}
-        value={username}
+        onChangeText={setEmail}
+        value={email}
         autoCapitalize="none"
       />
       <TextInput
@@ -79,7 +81,7 @@ export default function LoginScreen({ navigation }) {
         /*onPress={() => navigation.navigate("MyPlants")}*/
         onPress={handleLogin} 
       >
-        {loading ? <ActivityIndicator size="small" color="white" /> : <Text style={styles.buttonText}>Se connecter ici</Text>}
+        {<Text style={styles.buttonText}>Se connecter ici</Text>}
       </TouchableOpacity>
       <TouchableOpacity onPress={handleForgotPassword}>
         <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>

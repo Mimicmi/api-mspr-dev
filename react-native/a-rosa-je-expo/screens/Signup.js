@@ -6,14 +6,12 @@ import axios from 'axios';
 
 export default function SignupForm() {
   const [pseudo, setPseudo] = useState('');
-  const [prenom, setPrenom] = useState('');
-  const [dateNaissance, setDateNaissance] = useState('');
-  const [adresse, setAdresse] = useState('');
   const [email, setEmail] = useState('');
   const [motDePasse, setMotDePasse] = useState('');
   const [confirmMotDePasse, setConfirmMotDePasse] = useState('');
 
 
+  /* code actuelle 16h19 le 02/07/2023
   const handleSignupPress = async () => {
     const user = {
       email: 'votre_email',
@@ -36,8 +34,32 @@ export default function SignupForm() {
     } else {
       alert('Veuillez remplir tous les champs.');
     }
+  };*/
+
+const handleSignupPress = async () => {
+  const user = {
+    email: 'votre_email',
+    password: 'votre_mot_de_passe',
+    pseudo: 'votre_pseudo'
   };
-  
+
+  const { email, password, pseudo } = user;
+
+  if (email && password && pseudo) {
+    try {
+      const response = await axios.post('http://localhost:8090/users', user);
+      console.log(response.data);
+      alert('Compte créé avec succès !');
+    } catch (error) {
+      console.error(error);
+      alert('Une erreur s\'est produite lors de la création du compte.');
+    }
+  } else {
+    alert('Veuillez remplir tous les champs.');
+  }
+};
+
+
   return (
 
     <View style={styles.container}>
@@ -47,24 +69,6 @@ export default function SignupForm() {
         placeholder="pseudo"
         value={pseudo}
         onChangeText={setPseudo}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Prénom"
-        value={prenom}
-        onChangeText={setPrenom}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Date de naissance (jj/mm/aaaa)"
-        value={dateNaissance}
-        onChangeText={setDateNaissance}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Adresse"
-        value={adresse}
-        onChangeText={setAdresse}
       />
       <TextInput
         style={styles.input}
