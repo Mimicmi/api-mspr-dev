@@ -40,7 +40,7 @@ export default function LoginScreen({ navigation }) {
         }),
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         navigation.navigate('MyPlants');
       } else {
         setErrorMessage("Nom d'utilisateur ou mot de passe incorrect");
@@ -79,7 +79,7 @@ export default function LoginScreen({ navigation }) {
         /*onPress={() => navigation.navigate("MyPlants")}*/
         onPress={handleLogin} 
       >
-        <Text style={styles.buttonText}>Se connecter ici</Text>
+        {loading ? <ActivityIndicator size="small" color="white" /> : <Text style={styles.buttonText}>Se connecter ici</Text>}
       </TouchableOpacity>
       <TouchableOpacity onPress={handleForgotPassword}>
         <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>
